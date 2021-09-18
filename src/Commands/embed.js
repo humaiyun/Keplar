@@ -11,26 +11,26 @@ module.exports = new Command({
         const embed = new Discord.MessageEmbed();
 
         embed.setTitle("Bot Info")
-             .setColor("#9ec2ff")
-             .setAuthor(
-                 message.author.username, 
-                 message.author.avatarURL({ dynamic: true })
-             )
-             .setDescription("A bot that has various functions") // [description](URL)
-             .setThumbnail(message.author.avatarURL({ dynamic: true })) // client.user
-             .setTimestamp() // message.createdTimestamp
-             // .setImage()
-             .addFields(
+            .setColor("#9ec2ff")
+            .setAuthor(
+                message.author.username,
+                message.author.avatarURL({ dynamic: true })
+            )
+            .setDescription("A bot that has various functions") // [description](URL)
+            .setThumbnail(message.author.avatarURL({ dynamic: true })) // client.user
+            .setTimestamp() // message.createdTimestamp
+            // .setImage()
+            .addFields(
                 {
                     name: "Bot Version",
                     value: "1.0.0",
                     inline: true
-                }, 
+                },
                 {
                     name: "Bot Name",
                     value: client.user.username,
                     inline: true
-            });            
+                });
         message.channel.send({ embeds: [embed] });
     }
 });
