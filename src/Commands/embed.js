@@ -4,9 +4,10 @@ const Command = require("../Structures/Command.js");
 
 
 module.exports = new Command({
-    name: "embed",
-    description: "Shows an embed",
-    async run(message, arcs, client) {
+    name: "botinfo",
+    description: "Bot information",
+    permission: "SEND_MESSAGES",
+    async run(message, args, client) {
         const embed = new Discord.MessageEmbed();
 
         embed.setTitle("Bot Info")
