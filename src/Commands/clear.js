@@ -11,12 +11,12 @@ module.exports = new Command({
         }
         
         const amountParsed = parseInt(amount);
-        if(amountParsed > 50) { 
-            return message.reply("You cannot clear more than 50 messages!"); 
+        if(amountParsed > 75) { 
+            return message.reply("You cannot clear more than 75 messages!"); 
         }
 
         message.channel.bulkDelete(amountParsed);
-        const msg = await message.channel.send(`Cleared ${amountParsed} messages!`)
-        setTimeout(() => msg.delete(), 10000);
+        const msg = await message.channel.send(`Cleared ${amountParsed} messages!`);
+        setTimeout(() => msg.delete(), 5000);
     }
 });
