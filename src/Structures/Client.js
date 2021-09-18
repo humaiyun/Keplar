@@ -7,7 +7,7 @@ const fs = require("fs");
 
 class Client extends Discord.Client {
 	constructor() {
-		super({ intents });
+		super({ intents, allowedMentions: { repliedUser: false } });
 		/**
 		 * @type {Discord.Collection<string, Command>}
 		 */
