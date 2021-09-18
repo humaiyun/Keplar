@@ -30,10 +30,7 @@ module.exports = new Command({
                     name: "Bot Name",
                     value: client.user.username,
                     inline: true
-            });
-             
-             
-             
+            });            
         message.channel.send({ embeds: [embed] });
     }
 });
