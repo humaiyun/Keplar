@@ -8,11 +8,11 @@ const AsciiTable = require("ascii-table");
 const { table } = require("console");
 
 // Ascii for Command Handler console logs
-const commandsTable = new AsciiTable("Commands");
+const commandsTable = new AsciiTable();
 commandsTable.setHeading("Command", "Load Status");
 
 // Ascii for Event Handler console logs
-const eventsTable = new AsciiTable("Events");
+const eventsTable = new AsciiTable();
 eventsTable.setHeading("Event", "Load Status");
 
 
@@ -36,7 +36,9 @@ class Client extends Discord.Client {
 				 * @type {Command}
 				 */
 				const command = require(`../Commands/${file}`);
+
 				commandsTable.addRow(`${command.name}.js`, '✔');
+
 				//console.log(`Command "${command.name}" loaded`);
 				this.commands.set(command.name, command);
 			});
@@ -49,7 +51,9 @@ class Client extends Discord.Client {
 				 * @type {Event}
 				 */
 				const event = require(`../Events/${file}`);
+
 				eventsTable.addRow(`${event.event}.js`, '✔');
+
 				//console.log(`Event "${event.event}" loaded`);
 				this.on(event.event, event.run.bind(null, this));
 			});

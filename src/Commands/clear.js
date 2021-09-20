@@ -14,8 +14,8 @@ module.exports = new Command({
         }
 
         const amountParsed = parseInt(amount);
-        if (amountParsed > 75) { return message.reply("You cannot clear more than 75 messages!"); }
-        if (amountParsed < 1) { return message.reply("You must delete at least 1 message!"); }
+        if (amountParsed > 75) return message.reply("You cannot clear more than 75 messages!");
+        if (amountParsed < 1) return message.reply("You must delete at least 1 message!");
 
         message.channel.bulkDelete(amountParsed + 1);
         console.log(`\nclear.js: ${user} cleared ${amountParsed} messages...`);
