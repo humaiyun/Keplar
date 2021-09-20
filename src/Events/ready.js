@@ -1,5 +1,8 @@
 const Event = require("../Structures/Event.js");
+const AsciiTable = require("ascii-table");
 
 module.exports = new Event("ready", client => {
-	console.log(`Bot "${client.user.tag}" is ready!`);
+	const table = new AsciiTable("Bot Status");
+	table.addRow(`${client.user.tag} has loaded! 🎈`);
+	console.log(table.toString());
 });
