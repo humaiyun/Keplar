@@ -1,5 +1,5 @@
-/* package: images-scraper:  https://www.npmjs.com/package/images-scraper */
-const Command = require("../Structures/Command.js");
+/* package: images-scraper:  https://www.npmjs.com/package/images-scraper npm install images-scraper */
+/*const Command = require("../Structures/Command.js");
 
 const Scraper = require('images-scraper');
 const google = new Scraper(); {
@@ -22,4 +22,4 @@ module.exports = new Command({
         const image_results = await google.scrape(image_query, 1);
         message.channel.send(image_results[0].url);
     }
-});
+}); */
