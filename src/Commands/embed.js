@@ -1,4 +1,4 @@
-/* Documentation/Guide: https://discordjs.guide/popular-topics/embeds.html */
+/* Documentation: https://discordjs.guide/popular-topics/embeds.html */
 const Discord = require("discord.js");
 const Command = require("../Structures/Command.js");
 
