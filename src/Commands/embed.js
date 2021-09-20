@@ -1,6 +1,7 @@
 /* Documentation: https://discordjs.guide/popular-topics/embeds.html */
 const Discord = require("discord.js");
 const Command = require("../Structures/Command.js");
+const config = require("../Data/config.json");
 
 
 module.exports = new Command({
@@ -16,7 +17,7 @@ module.exports = new Command({
                 message.author.username,
                 message.author.avatarURL({ dynamic: true })
             )
-            .setDescription("A bot that has various functions") // [description](URL)
+            .setDescription(`A bot that has various functions\n\nType **${config.prefix}help** for more info`) // [description](URL)
             .setThumbnail(message.author.avatarURL({ dynamic: true })) // client.user
             .setTimestamp() // message.createdTimestamp
             // .setImage()

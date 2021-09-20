@@ -7,7 +7,7 @@ const fs = require("fs");
 
 class Client extends Discord.Client {
 	constructor() {
-		super({ intents, allowedMentions: { repliedUser: false } });
+		super({ intents }); //, allowedMentions: { repliedUser: false } - no highlighted replies
 		/**
 		 * @type {Discord.Collection<string, Command>}
 		 */
