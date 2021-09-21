@@ -5,7 +5,7 @@ const config = require("../Data/config.json");
 
 
 module.exports = new Command({
-    name: "botinfo",
+    name: "embed",
     description: "Bot information",
     permission: "SEND_MESSAGES",
     async run(message, args, client) {

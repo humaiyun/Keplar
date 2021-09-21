@@ -15,5 +15,9 @@ module.exports = new Event("messageCreate", (client, message) => {
 
 	if (!permission) return message.reply(`You do not have the "${command.permission}" permission to run this command!`);
 
+	// if(command && args[1] == ) {
+
+	// }
+
 	command.run(message, args, client);
 });
