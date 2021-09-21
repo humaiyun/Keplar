@@ -37,7 +37,7 @@ class Client extends Discord.Client {
 				 */
 				const command = require(`../Commands/${file}`);
 
-				commandsTable.addRow(`${command.name}.js`, '✔');
+				commandsTable.addRow(`${command.name}.js`, '👍');
 
 				//console.log(`Command "${command.name}" loaded`);
 				this.commands.set(command.name, command);
@@ -52,7 +52,7 @@ class Client extends Discord.Client {
 				 */
 				const event = require(`../Events/${file}`);
 
-				eventsTable.addRow(`${event.event}.js`, '✔');
+				eventsTable.addRow(`${event.event}.js`, '👍');
 
 				//console.log(`Event "${event.event}" loaded`);
 				this.on(event.event, event.run.bind(null, this));
