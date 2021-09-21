@@ -27,7 +27,11 @@ module.exports = new Command({
                 inline: false
             }, {
                 name: ":nazar_amulet: Information",
-                value: "`help` | `ping` | `embed` | `clear`",
+                value: "`help` | `ping` | `embed`",
+                inline: false
+            }, {
+                name: ":game_die: Fun",
+                value: "`ud`",
                 inline: false
             }, {
                 name: ":wrench: Utility",
