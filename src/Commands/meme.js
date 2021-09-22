@@ -10,45 +10,46 @@ module.exports = new Command({
     permission: "SEND_MESSAGES",
 
     async run(message, args, client) {
-
-        const subreddit = ["memes", "dankmemes", "meirl", "me_irl", "greentext"];
+        const subreddit = ["memes", "dankmemes", "meirl", "me_irl", "greentext", "wholesomememes"];
         const randomSub = subreddit[Math.floor(Math.random() * subreddit.length)];
 
-        got(`https://www.reddit.com/r/${randomSub}/random/.json`, { JSON: true }).then(result => {
-            const content = JSON.parse(result.body);
+        // Connect to the API and then fetch the data
+        try {
+            got(`https://www.reddit.com/r/${randomSub}/random/.json`, { JSON: true }).then(result => {
+                const content = JSON.parse(result.body);
 
+                const redditURL = content[0].data.children[0].data.url;
+                const redditTitle = content[0].data.children[0].data.title;
+                const subreddit = content[0].data.children[0].data.subreddit;
+                const permalink = content[0].data.children[0].data.permalink;
+                const author = content[0].data.children[0].data.author;
+                const upvotes = `👍  ${content[0].data.children[0].data.ups} `;
+                const downvotes = ` |  👎  ${content[0].data.children[0].data.downs} `;
+                const comments = ` |  💬  ${content[0].data.children[0].data.num_comments} `;
 
-            const redditURL = content[0].data.children[0].data.url;
-            const redditTitle = content[0].data.children[0].data.title;
-            const subreddit = content[0].data.children[0].data.subreddit;
-            const permalink = content[0].data.children[0].data.permalink;
-            const author = content[0].data.children[0].data.author;
-            const upvotes = `👍  ${content[0].data.children[0].data.ups} `;
-            const downvotes = ` |  👎  ${content[0].data.children[0].data.downs} `
-            const comments = ` |  💬  ${content[0].data.children[0].data.num_comments} `;
+                //console.log(`\nReddit URL: ${redditURL} \nPost Title: ${redditTitle} \nUpvotes & Comments: ${upvotes + downvotes + comments} `);
+                const helpEmbed = new Discord.MessageEmbed()
+                    .setColor("RANDOM")
+                    .setTitle(redditTitle)
+                    .setImage(redditURL)
+                    .setURL(`https://www.reddit.com${permalink}`)
+                    .addFields({
+                        name: ":snowman: Subreddit",
+                        value: `${subreddit}`,
+                        inline: true
+                    }, {
+                        name: ":japanese_goblin: User",
+                        value: `${author}`,
+                        inline: true
+                    })
+                    .setFooter(upvotes + downvotes + comments);
 
-
-            //console.log(`\nReddit URL: ${redditURL} \nPost Title: ${redditTitle} \nUpvotes & Comments: ${upvotes + downvotes + comments} `);
-
-            const helpEmbed = new Discord.MessageEmbed()
-                .setColor("RANDOM")
-                .setTitle(redditTitle)
-                .setImage(redditURL)
-                .setURL(`https://www.reddit.com${permalink}`)
-                .addFields({
-                    name: ":snowman: Subreddit",
-                    value: `${subreddit}`,
-                    inline: true
-                }, {
-                    name: ":japanese_goblin: User",
-                    value: `${author}`,
-                    inline: true
-                })
-                .setFooter(upvotes + downvotes + comments);
-
-            message.channel.send({ embeds: [helpEmbed] });
-
-        });
-
+                message.channel.send({ embeds: [helpEmbed] });
+            });
+        }
+        catch (err) {
+            message.channel.send("Error: " + err + "\n@Nemo#1259");
+            console.log("\meme.js: " + err);
+        }
     }
 });
