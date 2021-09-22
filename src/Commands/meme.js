@@ -28,7 +28,7 @@ module.exports = new Command({
                 const comments = ` |  💬  ${content[0].data.children[0].data.num_comments} `;
 
                 //console.log(`\nReddit URL: ${redditURL} \nPost Title: ${redditTitle} \nUpvotes & Comments: ${upvotes + downvotes + comments} `);
-                const helpEmbed = new Discord.MessageEmbed()
+                const memeEmbed = new Discord.MessageEmbed()
                     .setColor("RANDOM")
                     .setTitle(redditTitle)
                     .setImage(redditURL)
@@ -44,7 +44,7 @@ module.exports = new Command({
                     })
                     .setFooter(upvotes + downvotes + comments);
 
-                message.channel.send({ embeds: [helpEmbed] });
+                message.channel.send({ embeds: [memeEmbed] });
             });
         }
         catch (err) {
