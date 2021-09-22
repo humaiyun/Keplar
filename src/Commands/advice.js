@@ -20,18 +20,6 @@ module.exports = new Command({
 
                 const adviceEmbed = new Discord.MessageEmbed()
                     .setColor("RANDOM")
-                    // .setTitle(redditTitle)
-                    // .setImage(redditURL)
-                    // .setURL(`https://www.reddit.com${permalink}`)
-                    // .addFields({
-                    //     name: ":snowman: Subreddit",
-                    //     value: `${subreddit}`,
-                    //     inline: true
-                    // }, {
-                    //     name: ":japanese_goblin: User",
-                    //     value: `${author}`,
-                    //     inline: true
-                    // })
                     .setDescription(advice);
 
                 message.channel.send({ embeds: [adviceEmbed] });
