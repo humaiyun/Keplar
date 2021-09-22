@@ -34,6 +34,10 @@ module.exports = new Command({
                 value: client.user.username,
                 inline: true
             }, {
+                name: ":key: Prefix",
+                value: `${config.prefix}`,
+                inline: false
+            }, {
                 name: ":nazar_amulet: Information",
                 value: "`help` | `ping`",
                 inline: false
