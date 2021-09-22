@@ -35,7 +35,7 @@ module.exports = new Command({
                 inline: true
             }, {
                 name: ":nazar_amulet: Information",
-                value: "`help` | `ping` | `embed`",
+                value: "`help` | `ping`",
                 inline: false
             }, {
                 name: ":game_die: Gamble",
@@ -43,7 +43,7 @@ module.exports = new Command({
                 inline: false
             }, {
                 name: ":video_game: Fun",
-                value: "`ud`",
+                value: "`ud` | `meme`",
                 inline: false
             }, {
                 name: ":wrench: Utility",
