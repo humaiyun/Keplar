@@ -14,12 +14,14 @@ module.exports = new Command({
         const word = args.splice(1).join(" ");
         if (!word) return message.reply(`You must specify a word!\nExample: \`${config.prefix}ud hello\``);
 
-        // const definition = await urban(args[1].join(' ')).catch(err => {
-        //     message.reply(`"${args}" not found...`);
-        // });
-
         const definition = await urban(word).catch(err => {
-            message.reply(`"${word}" not found...`);
+            const throwEmbed = new Discord.MessageEmbed()
+                .setAuthor("Error")
+                .setColor("RED")
+                .setDescription(`"${word}" is invalid. If you need help, type \`${config.prefix}helpinfo\`\n\n` + `\`${err}\``);
+
+            message.reply({ embeds: [throwEmbed] });
+            //message.reply(`"${word}" not found...`);
         })
         const defEmbed = new Discord.MessageEmbed()
             .setColor("RANDOM")
