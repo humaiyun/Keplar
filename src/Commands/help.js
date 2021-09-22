@@ -47,7 +47,7 @@ module.exports = new Command({
                 inline: false
             }, {
                 name: ":video_game: Fun",
-                value: "`ud` | `meme`",
+                value: "`ud` | `meme` | `advice`",
                 inline: false
             }, {
                 name: ":wrench: Utility",
