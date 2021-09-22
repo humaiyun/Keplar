@@ -37,11 +37,11 @@ module.exports = new Command({
             }, {
                 name: ":writing_hand: Author",
                 value: `${definition.author}\n` ? `${definition.author}\n` : "No author found...",
-                inline: false
+                inline: true
             }, {
                 name: ":bar_chart: Rating",
                 value: `:thumbsup:     ${definition.thumbsUp}     |     :thumbsdown:     ${definition.thumbsDown} \n`,
-                inline: false
+                inline: true
             })
             .setTimestamp();
 
