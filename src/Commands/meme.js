@@ -11,41 +11,44 @@ module.exports = new Command({
 
     async run(message, args, client) {
 
-        const subreddit = ["memes", "dankmemes", "meirl", "me_irl"];
+        const subreddit = ["memes", "dankmemes", "meirl", "me_irl", "greentext"];
+        const randomSub = subreddit[Math.floor(Math.random() * subreddit.length)];
 
-        got(`https://www.reddit.com/r/${subreddit[Math.floor(Math.random() * subreddit.length)]}/random/.json`, { JSON: true }).then(result => {
-            let content = JSON.parse(result.body);
-            //console.log(`Title: ${content[0].data.children[0].data.title}\nURL: ${content[0].data.children[0].data.url}\nMisc: 👍 ${content[0].data.children[0].data.ups} 👎 ${content[0].data.children[0].data.downs} | Comments : ${content[0].data.children[0].data.num_comments}`);
-            //console.log("meme.js: content[0]: " + content[0].data.children[0].data.title);
+        got(`https://www.reddit.com/r/${randomSub}/random/.json`, { JSON: true }).then(result => {
+            const content = JSON.parse(result.body);
 
-            let url1 = content[0].data.children[0].data.url;
-            let title1 = content[0].data.children[0].data.title;
-            let misc1 = `Misc: 👍 ${content[0].data.children[0].data.ups} 👎 ${content[0].data.children[0].data.downs} | Comments : ${content[0].data.children[0].data.num_comments}`;
-            console.log(`\nURL: ${url1}\nTitle: ${title1}\nMisc: ${misc1}`);
 
-            // const post = new Discord.MessageEmbed()
-            //     .setTitle(`${content[0].data.children[0].data.title}`)
-            //     .setImage(`${content[0].data.children[0].data.url}`)
-            //     .setColor("RANDOM")
-            //     .setFooter(`👍 ${content[0].data.children[0].data.ups} | 👎 ${content[0].data.children[0].data.downs} | Comments : ${content[0].data.children[0].data.num_comments}`
-            //     );
+            const redditURL = content[0].data.children[0].data.url;
+            const redditTitle = content[0].data.children[0].data.title;
+            const subreddit = content[0].data.children[0].data.subreddit;
+            const permalink = content[0].data.children[0].data.permalink;
+            const author = content[0].data.children[0].data.author;
+            const upvotes = `👍  ${content[0].data.children[0].data.ups} `;
+            const downvotes = ` |  👎  ${content[0].data.children[0].data.downs} `
+            const comments = ` |  💬  ${content[0].data.children[0].data.num_comments} `;
+
+
+            //console.log(`\nReddit URL: ${redditURL} \nPost Title: ${redditTitle} \nUpvotes & Comments: ${upvotes + downvotes + comments} `);
+
             const helpEmbed = new Discord.MessageEmbed()
                 .setColor("RANDOM")
-                .setTitle(title1)
-                .setImage(url1)
-                .setFooter(misc1)
-                ;
+                .setTitle(redditTitle)
+                .setImage(redditURL)
+                .setURL(`https://www.reddit.com${permalink}`)
+                .addFields({
+                    name: ":snowman: Subreddit",
+                    value: `${subreddit}`,
+                    inline: true
+                }, {
+                    name: ":japanese_goblin: User",
+                    value: `${author}`,
+                    inline: true
+                })
+                .setFooter(upvotes + downvotes + comments);
+
             message.channel.send({ embeds: [helpEmbed] });
 
-
-            //message.channel.send({ embeds: post });
-            //console.log("meme.js: result.body.url: " + result.body.url);
-            //message.channel.send(`URL: ${url1}\nTitle: ${title1}\nMisc: ${misc1}`);
         });
-
-
-
-
 
     }
 });
