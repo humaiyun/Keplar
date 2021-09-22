@@ -3,16 +3,17 @@
 const Command = require("../Structures/Command.js");
 const Discord = require("discord.js");
 const urban = require('relevant-urban');
+const config = require("../Data/config.json");
 
 module.exports = new Command({
     name: "ud",
-    description: "Search the Urban Dictionary definition of a word.",
+    description: "Search the Urban Dictionary definition of a word or sentence.",
     permission: "SEND_MESSAGES",
     async run(message, args, client) {
 
         const word = args.splice(1).join(" ");
 
-        if (!word) return message.reply("You must specify a word! :laughing:");
+        if (!word) return message.reply(`You must specify a word!\nExample: \`${config.prefix}ud hello\``);
 
         // const definition = await urban(args[1].join(' ')).catch(err => {
         //     message.reply(`"${args}" not found...`);

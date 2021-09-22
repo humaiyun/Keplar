@@ -24,13 +24,25 @@ module.exports = new Command({
             .addFields({
                 name: ":pinched_fingers: About",
                 value: "This is a multipurpose bot",
-                inline: false
+                inline: true
+            }, {
+                name: ":robot: Bot Version",
+                value: "1.0.0",
+                inline: true
+            }, {
+                name: ":island: Bot Name",
+                value: client.user.username,
+                inline: true
             }, {
                 name: ":nazar_amulet: Information",
                 value: "`help` | `ping` | `embed`",
                 inline: false
             }, {
-                name: ":game_die: Fun",
+                name: ":game_die: Gamble",
+                value: "`coinflip`",
+                inline: false
+            }, {
+                name: ":video_game: Fun",
                 value: "`ud`",
                 inline: false
             }, {
