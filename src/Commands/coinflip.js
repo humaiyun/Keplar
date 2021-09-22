@@ -15,6 +15,6 @@ module.exports = new Command({
         const embed = new Discord.MessageEmbed()
             .setTitle(":coin: You flipped a coin!")
             .setDescription(`You got **${headsOrTails(daCoin)}**`);
-        message.reply({ embeds: [embed] });
+        message.channel.send({ embeds: [embed] });
     }
 });
