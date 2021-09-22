@@ -4,6 +4,7 @@ const Command = require("../Structures/Command.js");
 module.exports = new Command({
     name: "coinflip",
     description: "Flip a coin!",
+    usage: `\`${config.prefix}coinflip\``,
     permission: "SEND_MESSAGES",
     async run(message, args, client) {
         const daCoin = ["HEADS!", "TAILS!"];

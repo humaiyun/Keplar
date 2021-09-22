@@ -4,6 +4,7 @@ const Discord = require("discord.js");
 module.exports = new Command({
 	name: "ping",
 	description: "Shows the ping of the bot as well as the round-trip ping of the message.",
+	usage: `\`${config.prefix}ping\``,
 	permission: "SEND_MESSAGES",
 	async run(message, args, client) {
 

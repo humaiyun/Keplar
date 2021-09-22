@@ -8,6 +8,7 @@ const got = require("got");
 module.exports = new Command({
     name: "pokemon",
     description: "Get info of a Pokemon by it's name or ID.",
+    usage: `\`${config.prefix}pokemon <name | index number>\` | \`${config.prefix}pokemon <random | rand | rnd | -r>\``,
     permission: "SEND_MESSAGES",
 
     async run(message, args, client) {

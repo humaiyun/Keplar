@@ -6,6 +6,7 @@ const Discord = require("discord.js");
 module.exports = new Command({
     name: "help",
     description: "List of all supported commands",
+    usage: `\`${config.prefix}help\``,
     permission: "SEND_MESSAGES",
     async run(message, args, client) {
         // message.channel.send("Supported Commands:\n\n" +
@@ -20,26 +21,26 @@ module.exports = new Command({
             .setColor("RANDOM")
             //.setTitle(`Prefix - ${config.prefix}`)
             .setAuthor("Command List", message.author.displayAvatarURL({ dynamic: true }))
-            .setDescription(`Here are the list of commands!\nFor more info on specific commands, type \`${config.prefix}help <command>\``)
+            .setDescription(`Here are the list of commands!\nFor more info on specific commands, type \`${config.prefix}helpinfo\``)
             .addFields({
                 name: ":pinched_fingers: About",
-                value: "This is a multipurpose bot",
-                inline: true
+                value: "`This is a multipurpose bot`",
+                inline: false
             }, {
                 name: ":robot: Bot Version",
-                value: "1.0.0",
+                value: "`1.0.0`",
                 inline: true
             }, {
                 name: ":island: Bot Name",
-                value: client.user.username,
+                value: `\`${client.user.username}\``,
                 inline: true
             }, {
                 name: ":key: Prefix",
-                value: `${config.prefix}`,
-                inline: false
+                value: `\`${config.prefix}\``,
+                inline: true
             }, {
                 name: ":nazar_amulet: Information",
-                value: "`help` | `ping`",
+                value: "`help` | `helpinfo` | `ping`",
                 inline: false
             }, {
                 name: ":game_die: Gamble",
@@ -56,12 +57,10 @@ module.exports = new Command({
             });
         message.channel.send({ embeds: [helpEmbed] });
 
-        // get list of file names that end in ".js" in /src/Commands 
-        // let fileNames = fs.readdirSync(__dirname).filter(files => files.endsWith(".js"));
-        // console.log("File Names in /src/Commands/: " + "[ " + fileNames.toString() + " ]");
-        //console.log("\nhelp.js: help args[0]: " + help + " | help args[1]: " + commandName);
+        //message.channel.send(`Name: ${Pokemon.name}\nUsage: ${Pokemon.usage}`);
+        //console.log("help.js:61: " + `);
 
-
+        //console.log(`help.js:66: meme.name: ${meme.name}\nmeme.description: ${meme.description}\coinflip.name: ${coinflip.name}\coinflip.description: ${coinflip.description}`);
 
     }
 });

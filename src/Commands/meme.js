@@ -7,6 +7,7 @@ const got = require("got");
 module.exports = new Command({
     name: "meme",
     description: "Get a random meme from reddit and post it in an embedded format.",
+    usage: `\`${config.prefix}meme\``,
     permission: "SEND_MESSAGES",
 
     async run(message, args, client) {
