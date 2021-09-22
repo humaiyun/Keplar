@@ -49,7 +49,7 @@ module.exports = new Command({
                 const throwEmbed = new Discord.MessageEmbed()
                     .setAuthor("Error")
                     .setColor("RED")
-                    .setDescription(`"${pokemonInput}" is an invalid Pokemon name. If you need help, type \`${config.prefix}help pokemon\`\n\n` + `\`${err}\``);
+                    .setDescription(`"${pokemonInput}" is an invalid Pokemon name. If you need help, type \`${config.prefix}helpinfo\`\n\n` + `\`${err}\``);
 
                 message.reply({ embeds: [throwEmbed] });
             })
