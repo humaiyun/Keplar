@@ -23,7 +23,7 @@ module.exports = new Command({
             const invalidInputEmbed = new Discord.MessageEmbed()
                 .setTitle("Error")
                 .setColor("RED")
-                .setDescription(`You must specify a Pokemon! \n\nExample: \`${config.prefix}pokemon pikachu\` or \`${config.prefix}pokemon 25\`\n\nIf you need help, type \`${config.prefix}helpinfo\``);
+                .setDescription(`You must specify a Pokemon! \n\nExample: \`${config.prefix}pokemon pikachu\` or \`${config.prefix}pokemon 25\` or \`${config.prefix}pokemon r\` for a random Pokemon\n\nIf you need help, type \`${config.prefix}helpinfo\``);
             return message.reply({ embeds: [invalidInputEmbed] });
         }
         // Get Random Pokemon
