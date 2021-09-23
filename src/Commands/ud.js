@@ -12,7 +12,13 @@ module.exports = new Command({
     permission: "SEND_MESSAGES",
     async run(message, args, client) {
         const word = args.splice(1).join(" ");
-        if (!word) return message.reply(`You must specify a word!\nExample: \`${config.prefix}ud hello\``);
+        if (!word) {
+            const throwNoWordEmbed = new Discord.MessageEmbed()
+                .setAuthor("Error")
+                .setColor("RED")
+                .setDescription(`You must specify a word!\nExample: \`${config.prefix}ud hello\``);
+            return message.reply({ embeds: [throwNoWordEmbed] });
+        }
 
         const definition = await urban(word).catch(err => {
             const throwEmbed = new Discord.MessageEmbed()
