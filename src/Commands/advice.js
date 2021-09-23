@@ -6,7 +6,7 @@ const got = require("got");
 
 module.exports = new Command({
     name: "advice",
-    description: "Generate a random piece of advice to put you at ease, or fill you with guilt and regret.",
+    description: "Generate a random piece of advice to put you at ease, or fill you with guilt and regret",
     usage: `\`${config.prefix}advice\``,
     permission: "SEND_MESSAGES",
 

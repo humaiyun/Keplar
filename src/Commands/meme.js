@@ -3,10 +3,11 @@
 const Discord = require("discord.js");
 const Command = require("../Structures/Command.js");
 const got = require("got");
+const config = require("../Data/config.json");
 
 module.exports = new Command({
     name: "meme",
-    description: "Get a random meme from reddit and post it in an embedded format.",
+    description: "Get a random meme from reddit",
     usage: `\`${config.prefix}meme\``,
     permission: "SEND_MESSAGES",
 
@@ -15,8 +16,15 @@ module.exports = new Command({
         const randomSub = subreddit[Math.floor(Math.random() * subreddit.length)];
 
         // Connect to the API and then fetch the data
-        try {
-            got(`https://www.reddit.com/r/${randomSub}/random/.json`, { JSON: true }).then(result => {
+        got(`https://www.reddit.com/r/${randomSub}/random/.json`, { JSON: true })
+            .catch(err => {
+                const throwEmbed = new Discord.MessageEmbed()
+                    .setAuthor("Error")
+                    .setColor("RED")
+                    .setDescription(`Something wrong happened... \n\nIf you need help, type \`${config.prefix}helpinfo\`\n\n` + `Error Message: \`${err}\``);
+                message.reply({ embeds: [throwEmbed] });
+            })
+            .then(result => {
                 const content = JSON.parse(result.body);
 
                 const redditURL = content[0].data.children[0].data.url;
@@ -44,13 +52,7 @@ module.exports = new Command({
                         inline: true
                     })
                     .setFooter(upvotes + downvotes + comments);
-
                 message.channel.send({ embeds: [memeEmbed] });
             });
-        }
-        catch (err) {
-            message.channel.send("Error: " + err + "\n@Nemo#1259");
-            console.log("\meme.js: " + err);
-        }
     }
 });
