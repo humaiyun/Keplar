@@ -14,6 +14,7 @@
   },
   "homepage": "https://github.com/humaiyun/DiscordVarietyBot#readme",
   "dependencies": {
+    "@psibean/discord.js-pagination": "^4.0.0",
     "ascii-table": "^0.0.9",
     "discord.js": "^13.2.0-dev.1631880196.88e2622",
     "discord.js-pagination": "^1.0.3",
