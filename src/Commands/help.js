@@ -1,6 +1,5 @@
 const Command = require("../Structures/Command.js");
 const config = require("../Data/config.json");
-const fs = require("fs");
 const Discord = require("discord.js");
 
 module.exports = new Command({
