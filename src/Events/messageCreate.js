@@ -1,6 +1,4 @@
 const Event = require("../Structures/Event.js");
-const Discord = require("discord.js");
-const config = require("../Data/config.json");
 
 module.exports = new Event("messageCreate", (client, message) => {
 	if (message.author.bot) return;
@@ -11,15 +9,7 @@ module.exports = new Event("messageCreate", (client, message) => {
 
 	const command = client.commands.find(cmd => cmd.name == args[0]);
 
-	//if (!command) return message.reply(`${args[0]} is not a valid command!`);
-
-	if (!command) {
-		const invalidEmbed = new Discord.MessageEmbed()
-			.setAuthor("Error")
-			.setColor("RED")
-			.setDescription(`\`${args[0]}\` is not a valid command! For a list of all supported commands type \`${config.prefix}help\``);
-		return message.reply({ embeds: [invalidEmbed] });
-	}
+	if (!command) return message.reply(`${args[0]} is not a valid command!`);
 
 	const permission = message.member.permissions.has(command.permission, true);
 

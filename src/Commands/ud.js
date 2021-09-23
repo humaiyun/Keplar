@@ -7,7 +7,7 @@ const config = require("../Data/config.json");
 
 module.exports = new Command({
     name: "ud",
-    description: "Search Urban Dictionary for a definition of a word or sentence",
+    description: "Search the Urban Dictionary definition of a word or sentence.",
     usage: `\`${config.prefix}ud <word | sentence>\``,
     permission: "SEND_MESSAGES",
     async run(message, args, client) {
@@ -18,7 +18,7 @@ module.exports = new Command({
             const throwEmbed = new Discord.MessageEmbed()
                 .setAuthor("Error")
                 .setColor("RED")
-                .setDescription(`A definition for "${word}" could not be found. \n\nIf you need help, type \`${config.prefix}helpinfo\`\n\n` + `Error Message: \`${err}\``);
+                .setDescription(`"${word}" is invalid. If you need help, type \`${config.prefix}helpinfo\`\n\n` + `\`${err}\``);
 
             message.reply({ embeds: [throwEmbed] });
             //message.reply(`"${word}" not found...`);

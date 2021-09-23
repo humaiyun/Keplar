@@ -1,10 +1,9 @@
 const Discord = require("discord.js");
 const Command = require("../Structures/Command.js");
-const config = require("../Data/config.json");
 
 module.exports = new Command({
     name: "coinflip",
-    description: "Flip a coin",
+    description: "Flip a coin!",
     usage: `\`${config.prefix}coinflip\``,
     permission: "SEND_MESSAGES",
     async run(message, args, client) {
