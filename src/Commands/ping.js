@@ -1,21 +1,16 @@
 const Command = require("../Structures/Command.js");
 const Discord = require("discord.js");
+const config = require("../Data/config.json");
 
 module.exports = new Command({
 	name: "ping",
-	description: "Shows the ping of the bot as well as the round-trip ping of the message.",
+	description: "Shows the ping of the bot",
 	usage: `\`${config.prefix}ping\``,
 	permission: "SEND_MESSAGES",
 	async run(message, args, client) {
 
-		// const pingEmbed = new Discord.MessageEmbed()
-		// 	.addFields({
-		// 		name: ":satellite: Ping",
-		// 		value: `${client.ws.ping} ms.`,
-		// 		inline: true
-		// 	});
-
-		// message.channel.send({ embeds: [pingEmbed] });
+		const pingEmbed = new Discord.MessageEmbed().setDescription(`:satellite: **Ping:** ${client.ws.ping} ms`);
+		message.channel.send({ embeds: [pingEmbed] });
 
 		// const newEmbed = new Discord.MessageEmbed(message.embeds[0])
 		// 	.setDescription(`:satellite: Ping: ${client.ws.ping} ms.\n:incoming_envelope: Round Trip: ${msg.createdTimestamp - message.createdTimestamp} ms.`);
@@ -36,11 +31,11 @@ module.exports = new Command({
 		// });
 
 
-		const msg = await message.reply(`Ping:  ms.`);
+		// const msg = await message.reply(`Ping:  ms.`);
 
-		msg.edit(
-			`**Ping:** ${client.ws.ping} ms.\n**Message Ping:** ${msg.createdTimestamp - message.createdTimestamp} ms.`
-		);
+		// msg.edit(
+		// 	`**Ping:** ${client.ws.ping} ms.\n**Message Ping:** ${msg.createdTimestamp - message.createdTimestamp} ms.`
+		// );
 
 
 

@@ -1,8 +1,9 @@
 const Command = require("../Structures/Command.js");
+const config = require("../Data/config.json");
 
 module.exports = new Command({
     name: "clear",
-    description: "Clear an amount of messages.",
+    description: "Clear a specified amount of messages",
     usage: `\`${config.prefix}clear <number>\``,
     permission: "ADMINISTRATOR",
     async run(message, args, client) {
