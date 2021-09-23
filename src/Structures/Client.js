@@ -18,7 +18,7 @@ eventsTable.setHeading("Event", "Load Status");
 
 class Client extends Discord.Client {
 	constructor() {
-		super({ intents }); //, allowedMentions: { repliedUser: false } - no highlighted replies
+		super({ intents, allowedMentions: { repliedUser: false } }); // - no highlighted replies
 		/**
 		 * @type {Discord.Collection<string, Command>}
 		 */
