@@ -20,19 +20,24 @@ module.exports = new Command({
         /* Input checking */
         let pokemonInput = args.splice(1).join(" ");
         if (!pokemonInput) {
-            // ********************** Create an embed for this later
-            return message.reply(`You must specify a Pokemon!\nExample: \`${config.prefix}pokemon pikachu\` or \`${config.prefix}pokemon 25\``);
+            const invalidInputEmbed = new Discord.MessageEmbed()
+                .setTitle("Error")
+                .setColor("RED")
+                .setDescription(`You must specify a Pokemon! \n\nExample: \`${config.prefix}pokemon pikachu\` or \`${config.prefix}pokemon 25\`\n\nIf you need help, type \`${config.prefix}helpinfo\``);
+            return message.reply({ embeds: [invalidInputEmbed] });
         }
-        // Random Pokemon
+        // Get Random Pokemon
         if (pokemonInput === "random" || pokemonInput === "rnd" || pokemonInput === "rand" || pokemonInput === "-r") {
             pokemonInput = randomNumMinToMax(minIndex, maxIndex);
-            console.log(`pokemon.js:28: Pokemon Index: ${pokemonInput}`);
+            //console.log(`pokemon.js:32: Pokemon Index: ${pokemonInput}`);
         }
         // Input validation
         if (!isNaN(parseInt(pokemonInput))) { // Check if pokemon is a number
             if (parseInt(pokemonInput) < minIndex || parseInt(pokemonInput) > maxIndex) {
                 const invalidEmbed = new Discord.MessageEmbed()
-                    .setDescription(`Invalid index!\nPick between \`${minIndex}\` and \`${maxIndex}\``);
+                    .setTitle("Error")
+                    .setColor("RED")
+                    .setDescription(`Invalid index \`${pokemonInput}\`!\nPick between \`${minIndex}\` and \`${maxIndex}\``);
                 return message.reply({ embeds: [invalidEmbed] });
             }
             pokemonInput = parseInt(pokemonInput);
@@ -42,15 +47,13 @@ module.exports = new Command({
             //console.log("pokemon.js: Pokemon is a string: " + pokemonInput);
         }
 
-
         // get request the api
         got(`https://pokeapi.co/api/v2/pokemon/${pokemonInput}/`, { JSON: true })
             .catch((err) => {
                 const throwEmbed = new Discord.MessageEmbed()
                     .setAuthor("Error")
                     .setColor("RED")
-                    .setDescription(`"${pokemonInput}" is an invalid Pokemon name. If you need help, type \`${config.prefix}helpinfo\`\n\n` + `\`${err}\``);
-
+                    .setDescription(`${pokemonInput} is an invalid Pokemon name. \n\nIf you need help, type \`${config.prefix}helpinfo\`\n\n` + `Error Message: \`${err}\``);
                 message.reply({ embeds: [throwEmbed] });
             })
             .then(result => {
@@ -61,43 +64,69 @@ module.exports = new Command({
                 const pokemonIndex = content.id;
                 const pokemonHeight = content.height / 10.0; // height in metres
                 const pokemonWeight = content.weight / 10.0; // weight in kg
-                const pokemonFrontSprite = content.sprites.front_default; //content.sprites.other.official_artwork.front_default
-                //const pokemonBackSprite = content.sprites.back_default;
+                const pokemonHP = content.stats[0].base_stat; // base Health
+                const pokemonAP = content.stats[1].base_stat; // base Attack
+                const pokemonFrontSprite = `${content.sprites.other["official-artwork"].front_default}`; //content.sprites.front_default;
+                //const pokemonBackSprite = content.sprites.back_default; Sprite of the back of the pokemon
 
-                const amountOfMoves = content.moves.length;
                 let arrayOfMoves = [];
-                while (arrayOfMoves.length < 4) { // get 4 moves
-                    arrayOfMoves.push(content.moves[randomNumMinToMax(0, amountOfMoves - 1)].move.name);
+                if (content.moves.length >= 1) {
+                    const amountOfMoves = content.moves.length;
+                    while (arrayOfMoves.length < 3) { // get 3 moves - change the number to get num amount of moves
+                        arrayOfMoves.push(content.moves[randomNumMinToMax(0, amountOfMoves - 1)].move.name);
+                    }
                 }
 
                 const pokeEmbed = new Discord.MessageEmbed()
                     .setColor("RANDOM")
-                    .setAuthor(`Pokemon #${pokemonIndex}`, `${pokemonFrontSprite}`, `https://pokemon.fandom.com/wiki/${pokemonName}`)
+                    .setAuthor(`${pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1)}`, `${pokemonFrontSprite}`, `https://pokemon.fandom.com/wiki/${pokemonName}`)
                     .setImage(`${pokemonFrontSprite}`)
                     .setFields({
-                        name: "Name",
-                        value: `\`${pokemonName}\``,
-                        inline: true
-                    }, {
-                        name: "Type",
-                        value: `\`${pokemonType}\``,
-                        inline: true
-                    }, {
                         name: "Index",
-                        value: `\`#${pokemonIndex}\``,
+                        value: `\`${pokemonIndex}\``,
                         inline: true
                     }, {
-                        name: "Height",
+                        name: `Height`,
                         value: `\`${pokemonHeight} m\``,
                         inline: true
                     }, {
                         name: "Weight",
                         value: `\`${pokemonWeight} kg\``,
                         inline: true
+                    }, {
+                        name: "Type",
+                        value: `\`${pokemonType}\``,
+                        inline: true
+                    }, {
+                        name: "Base Health",
+                        value: `\`${pokemonHP}\``,
+                        inline: true
+                    }, {
+                        name: "Base Attack",
+                        value: `\`${pokemonAP}\``,
+                        inline: true
+                    }, {
+                        name: "Move 1",
+                        value: `\`${arrayOfMoves[0] === undefined ? "N/A" : arrayOfMoves[0]}\``,
+                        inline: true
+                    }, {
+                        name: "Move 2",
+                        value: `\`${arrayOfMoves[1] === undefined ? "N/A" : arrayOfMoves[1]}\``,
+                        inline: true
+                    }, {
+                        name: "Move 3",
+                        value: `\`${arrayOfMoves[2] === undefined ? "N/A" : arrayOfMoves[2]}\``,
+                        inline: true
                     });
 
-                message.channel.send({ embeds: [pokeEmbed] });
 
+                message.channel.send({ embeds: [pokeEmbed] });
+                // {
+                //     name: "Name",
+                //     value: `\`${pokemonName}\``,
+                //     inline: true
+                // }, 
+                //console.log("pokemon.js:110: Base HP: " + pokemonHP);
                 // console.log(`\nName: ${pokemonName} \nType: ${pokemonType} \n#: ${pokemonIndex} \nAmt of moves: ${amountOfMoves}
                 // ${arrayOfMoves.length} Random Moves: ${arrayOfMoves.toString()} \nHeight: ${pokemonHeight}m \nWeight: ${pokemonWeight}kg \nFront: ${pokemonFrontSprite}`); //// \nBack: ${pokemonBackSprite}
             });
