@@ -1,4 +1,5 @@
 const Command = require("../Structures/Command.js");
+const Discord = require("discord.js");
 const config = require("../Data/config.json");
 
 module.exports = new Command({
@@ -12,17 +13,43 @@ module.exports = new Command({
         const user = message.author.tag;
 
         if (!amount || isNaN(amount)) {
-            return message.reply(`"${amount == undefined ? "Nothing" : amount}" is not valid -> Specify an amount!`);
+            const nothingEmbed = new Discord.MessageEmbed()
+                .setAuthor("Error")
+                .setColor("RED")
+                .setDescription(`\`${amount == undefined ? "Nothing" : amount}\` is not a valid amount!`);
+
+            return message.channel.send({ embeds: [nothingEmbed] });
+            //return message.reply(`"${amount == undefined ? "Nothing" : amount}" is not valid -> Specify an amount!`);
         }
 
         const amountParsed = parseInt(amount);
-        if (amountParsed > 75) return message.reply("You cannot clear more than 75 messages!");
-        if (amountParsed < 1) return message.reply("You must delete at least 1 message!");
+        if (amountParsed > 75) {
+            const overLimitEmbed = new Discord.MessageEmbed()
+                .setAuthor("Error")
+                .setColor("RED")
+                .setDescription(`You cannot clear more than \`75\` messages!`);
+            return message.channel.send({ embeds: [overLimitEmbed] });
+            //return message.reply("You cannot clear more than 75 messages!");
+        }
+
+
+        if (amountParsed < 1) {
+            const underLimitEmbed = new Discord.MessageEmbed()
+                .setAuthor("Error")
+                .setColor("RED")
+                .setDescription(`You must clear at least \`1\` message!`);
+            return message.channel.send({ embeds: [underLimitEmbed] });
+            //return message.reply("You must delete at least 1 message!");
+        }
 
         message.channel.bulkDelete(amountParsed + 1);
-        console.log(`\nclear.js: ${user} cleared ${amountParsed} messages...`);
+        console.log(`\nclear.js:46: ${user} cleared ${amountParsed} messages...`);
 
-        const msg = await message.channel.send(`Cleared **${amountParsed}** messages!`);
+        const clearedEmbed = new Discord.MessageEmbed()
+            .setColor("RANDOM")
+            .setDescription(`Cleared \`${amountParsed}\` messages!`);
+
+        const msg = await message.channel.send({ embeds: [clearedEmbed] });
         setTimeout(() => { msg.delete() }, 2500);
     }
 });

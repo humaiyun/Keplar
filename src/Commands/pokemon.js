@@ -8,7 +8,7 @@ const got = require("got");
 module.exports = new Command({
     name: "pokemon",
     description: "Get info of a Pokemon by it's name or ID.",
-    usage: `\`${config.prefix}pokemon <name | index number>\` | \`${config.prefix}pokemon <random | rand | rnd | -r>\``,
+    usage: `\`${config.prefix}pokemon <name | index number>\` | \`${config.prefix}pokemon <random | rand | rnd | -r | r>\``,
     permission: "SEND_MESSAGES",
 
     async run(message, args, client) {
@@ -27,7 +27,7 @@ module.exports = new Command({
             return message.reply({ embeds: [invalidInputEmbed] });
         }
         // Get Random Pokemon
-        if (pokemonInput === "random" || pokemonInput === "rnd" || pokemonInput === "rand" || pokemonInput === "-r") {
+        if (pokemonInput === "random" || pokemonInput === "rnd" || pokemonInput === "rand" || pokemonInput === "-r" || pokemonInput === "r") {
             pokemonInput = randomNumMinToMax(minIndex, maxIndex);
             //console.log(`pokemon.js:32: Pokemon Index: ${pokemonInput}`);
         }
@@ -37,7 +37,7 @@ module.exports = new Command({
                 const invalidEmbed = new Discord.MessageEmbed()
                     .setTitle("Error")
                     .setColor("RED")
-                    .setDescription(`Invalid index \`${pokemonInput}\`!\nPick between \`${minIndex}\` and \`${maxIndex}\``);
+                    .setDescription(`Invalid index \`${pokemonInput}\`\n\nPick between \`${minIndex}\` and \`${maxIndex}\``);
                 return message.reply({ embeds: [invalidEmbed] });
             }
             pokemonInput = parseInt(pokemonInput);
@@ -53,8 +53,8 @@ module.exports = new Command({
                 const throwEmbed = new Discord.MessageEmbed()
                     .setAuthor("Error")
                     .setColor("RED")
-                    .setDescription(`${pokemonInput} is an invalid Pokemon name. \n\nIf you need help, type \`${config.prefix}helpinfo\`\n\n` + `Error Message: \`${err}\``);
-                message.reply({ embeds: [throwEmbed] });
+                    .setDescription(`\`${pokemonInput}\` is an invalid Pokemon name. \n\nIf you need help, type \`${config.prefix}helpinfo\`\n\n` + `Error Message: \`${err}\``);
+                message.channel.send({ embeds: [throwEmbed] });
             })
             .then(result => {
                 const content = JSON.parse(result.body);
