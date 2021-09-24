@@ -7,8 +7,8 @@ const got = require("got");
 
 module.exports = new Command({
     name: "pokemon",
-    description: "Get info of a Pokemon by it's name or ID.",
-    usage: `\`${config.prefix}pokemon <name | index number>\` | \`${config.prefix}pokemon <random | rand | rnd | -r | r>\``,
+    description: "Get info of a random Pokemon or a specific one by it's name or ID.",
+    usage: `\`${config.prefix}pokemon [name | index number]>\``,
     permission: "SEND_MESSAGES",
 
     async run(message, args, client) {
@@ -20,35 +20,37 @@ module.exports = new Command({
         /* Input checking */
         let pokemonInput = args.splice(1).join(" ");
         if (!pokemonInput) {
-            const invalidInputEmbed = new Discord.MessageEmbed()
-                .setTitle("Error")
-                .setColor("RED")
-                .setDescription(`You must specify a Pokemon! \n\nExample: \`${config.prefix}pokemon pikachu\` or \`${config.prefix}pokemon 25\` or \`${config.prefix}pokemon r\` for a random Pokemon\n\nIf you need help, type \`${config.prefix}helpinfo\``);
-            return message.reply({ embeds: [invalidInputEmbed] });
+            pokemonInput = randomNumMinToMax(minIndex, maxIndex);
+            // const invalidInputEmbed = new Discord.MessageEmbed()
+            //     .setTitle("Error")
+            //     .setColor("RED")
+            //     .setDescription(`You must specify a Pokemon! \n\nExample: \`${config.prefix}pokemon pikachu\` or \`${config.prefix}pokemon 25\` or \`${config.prefix}pokemon r\` for a random Pokemon\n\nIf you need help, type \`${config.prefix}helpinfo\``);
+            // return message.reply({ embeds: [invalidInputEmbed] });
         } else {
             // Get Random Pokemon
-            if (pokemonInput === "random" || pokemonInput === "rnd" || pokemonInput === "rand" || pokemonInput === "-r" || pokemonInput === "r") {
-                pokemonInput = randomNumMinToMax(minIndex, maxIndex);
-                //console.log(`pokemon.js:32: Pokemon Index: ${pokemonInput}`);
-            }
-            else {
-                // Input validation
-                if (!isNaN(parseInt(pokemonInput))) { // Check if pokemon is a number
-                    if (parseInt(pokemonInput) < minIndex || parseInt(pokemonInput) > maxIndex) {
-                        const invalidEmbed = new Discord.MessageEmbed()
-                            .setTitle("Error")
-                            .setColor("RED")
-                            .setDescription(`Invalid index \`${pokemonInput}\`\n\nPick a number between \`${minIndex}\` and \`${maxIndex}\``);
-                        return message.reply({ embeds: [invalidEmbed] });
-                    }
-                    pokemonInput = parseInt(pokemonInput);
-                    //console.log("pokemon.js: Pokemon is a number: " + pokemonInput);
-                } else {
-                    /* pokemonInput is a string so probably nothing: REMOVE this if nothing */
-                    //console.log("pokemon.js: Pokemon is a string: " + pokemonInput);
+            // if (pokemonInput === "random" || pokemonInput === "rnd" || pokemonInput === "rand" || pokemonInput === "-r" || pokemonInput === "r") {
+            //     pokemonInput = randomNumMinToMax(minIndex, maxIndex);
+            //     //console.log(`pokemon.js:32: Pokemon Index: ${pokemonInput}`);
+            // }
+            // else {
+            // Input validation
+            if (!isNaN(parseInt(pokemonInput))) { // Check if pokemon is a number
+                if (parseInt(pokemonInput) < minIndex || parseInt(pokemonInput) > maxIndex) {
+                    const invalidEmbed = new Discord.MessageEmbed()
+                        .setTitle("Error")
+                        .setColor("RED")
+                        .setDescription(`Invalid index \`${pokemonInput}\`\n\nPick a number between \`${minIndex}\` and \`${maxIndex}\``);
+                    return message.reply({ embeds: [invalidEmbed] });
                 }
+                pokemonInput = parseInt(pokemonInput);
+                //console.log("pokemon.js: Pokemon is a number: " + pokemonInput);
+            } else {
+                /* pokemonInput is a string so probably nothing: REMOVE this if nothing */
+                //console.log("pokemon.js: Pokemon is a string: " + pokemonInput);
             }
+            //}
         }
+        console.log(`pokemon.js:53: pokemon number: ${pokemonInput}`);
 
         // get request the api
         got(`https://pokeapi.co/api/v2/pokemon/${pokemonInput}/`, { JSON: true })
