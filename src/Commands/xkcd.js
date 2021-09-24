@@ -90,10 +90,6 @@ module.exports = new Command({
                         value: `\`${xkcdNum}\``,
                         inline: true
                     }, {
-                        name: `Title`,
-                        value: `\`${xkcdTitle}\``,
-                        inline: true
-                    }, {
                         name: `Date Released`,
                         value: `\`${xkcdYear} - ${xkcdMonth} - ${xkcdDay}\``,
                         inline: true
