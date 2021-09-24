@@ -25,26 +25,29 @@ module.exports = new Command({
                 .setColor("RED")
                 .setDescription(`You must specify a Pokemon! \n\nExample: \`${config.prefix}pokemon pikachu\` or \`${config.prefix}pokemon 25\` or \`${config.prefix}pokemon r\` for a random Pokemon\n\nIf you need help, type \`${config.prefix}helpinfo\``);
             return message.reply({ embeds: [invalidInputEmbed] });
-        }
-        // Get Random Pokemon
-        if (pokemonInput === "random" || pokemonInput === "rnd" || pokemonInput === "rand" || pokemonInput === "-r" || pokemonInput === "r") {
-            pokemonInput = randomNumMinToMax(minIndex, maxIndex);
-            //console.log(`pokemon.js:32: Pokemon Index: ${pokemonInput}`);
-        }
-        // Input validation
-        if (!isNaN(parseInt(pokemonInput))) { // Check if pokemon is a number
-            if (parseInt(pokemonInput) < minIndex || parseInt(pokemonInput) > maxIndex) {
-                const invalidEmbed = new Discord.MessageEmbed()
-                    .setTitle("Error")
-                    .setColor("RED")
-                    .setDescription(`Invalid index \`${pokemonInput}\`\n\nPick between \`${minIndex}\` and \`${maxIndex}\``);
-                return message.reply({ embeds: [invalidEmbed] });
-            }
-            pokemonInput = parseInt(pokemonInput);
-            //console.log("pokemon.js: Pokemon is a number: " + pokemonInput);
         } else {
-            /* pokemonInput is a string so probably nothing: REMOVE this if nothing */
-            //console.log("pokemon.js: Pokemon is a string: " + pokemonInput);
+            // Get Random Pokemon
+            if (pokemonInput === "random" || pokemonInput === "rnd" || pokemonInput === "rand" || pokemonInput === "-r" || pokemonInput === "r") {
+                pokemonInput = randomNumMinToMax(minIndex, maxIndex);
+                //console.log(`pokemon.js:32: Pokemon Index: ${pokemonInput}`);
+            }
+            else {
+                // Input validation
+                if (!isNaN(parseInt(pokemonInput))) { // Check if pokemon is a number
+                    if (parseInt(pokemonInput) < minIndex || parseInt(pokemonInput) > maxIndex) {
+                        const invalidEmbed = new Discord.MessageEmbed()
+                            .setTitle("Error")
+                            .setColor("RED")
+                            .setDescription(`Invalid index \`${pokemonInput}\`\n\nPick a number between \`${minIndex}\` and \`${maxIndex}\``);
+                        return message.reply({ embeds: [invalidEmbed] });
+                    }
+                    pokemonInput = parseInt(pokemonInput);
+                    //console.log("pokemon.js: Pokemon is a number: " + pokemonInput);
+                } else {
+                    /* pokemonInput is a string so probably nothing: REMOVE this if nothing */
+                    //console.log("pokemon.js: Pokemon is a string: " + pokemonInput);
+                }
+            }
         }
 
         // get request the api
