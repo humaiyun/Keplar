@@ -31,7 +31,7 @@ module.exports = new Command({
                 inline: false
             }, {
                 name: ":video_game: Fun",
-                value: "`ud` | `meme` | `advice` | `pokemon`",
+                value: "`ud` | `meme` | `advice` | `pokemon` | `xkcd` ",
                 inline: false
             }, {
                 name: ":game_die: Gamble",
