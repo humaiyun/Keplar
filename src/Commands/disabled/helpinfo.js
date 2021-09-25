@@ -3,9 +3,6 @@ const Command = require("../Structures/Command.js");
 const config = require("../Data/config.json");
 const Discord = require("discord.js");
 
-const { PaginatorEvents, ReactionPaginator } = require('@psibean/discord.js-pagination');
-
-
 module.exports = new Command({
     name: "helpinfo",
     description: "Detailed explanation of the supported commands and their usage",
