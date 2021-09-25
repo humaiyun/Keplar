@@ -34,6 +34,10 @@ module.exports = new Command({
                 value: "`ud` | `meme` | `advice` | `pokemon` | `xkcd` ",
                 inline: false
             }, {
+                name: ":coin: Cryptocurrency",
+                value: "`crypto`",
+                inline: false
+            }, {
                 name: ":game_die: Gamble",
                 value: "`coinflip`",
                 inline: false
