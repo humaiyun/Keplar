@@ -73,6 +73,31 @@ module.exports = new Command({
             return message.channel.send({ embeds: [embedArr] })
         }
 
+        function getListOfCoins(content) {
+            const cryptoName = [];
+            const cryptoSymbol = [];
+            const cryptoPrice = [];
+            const cryptoImage = [];
+            for (let i = 0; i < content.length; i++) {
+                cryptoName.push(content[i].id);
+                cryptoSymbol.push(content[i].symbol);
+                cryptoPrice.push(content[i].current_price);
+                cryptoImage.push(content[i].image);
+            }
+            let embedArr = new Discord.MessageEmbed()
+                .setTitle("Top Cryptocurrency by Market Cap")
+                .setDescription(`All currency is in \`USD\` :money_with_wings: \n\n[Data Provided by CoinGecko](https://www.coingecko.com/en)\n\n`);
+
+            for (let j = 0; j < cryptoName.length; j++) {
+                embedArr.addFields({
+                    name: `${j + 1}. ${cryptoName[j].charAt(0).toUpperCase() + cryptoName[j].slice(1)}`,
+                    value: `\`${cryptoSymbol[j].toUpperCase()}\`  →  \`$${cryptoPrice[j].toString()}\``,
+                    inline: true
+                });
+            }
+            return message.channel.send({ embeds: [embedArr] });
+        }
+
         if (!cryptoInput) { // get info of the top 24 crypto's by market cap
             coinGeckoURL = `${coinGeckoURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=24&page=1&sparkline=false`;
             got(coinGeckoURL, { JSON: true })
@@ -85,28 +110,7 @@ module.exports = new Command({
                 })
                 .then(result => {
                     const content = JSON.parse(result.body);
-                    const cryptoName = [];
-                    const cryptoSymbol = [];
-                    const cryptoPrice = [];
-                    const cryptoImage = [];
-                    for (let i = 0; i < content.length; i++) {
-                        cryptoName.push(content[i].id);
-                        cryptoSymbol.push(content[i].symbol);
-                        cryptoPrice.push(content[i].current_price);
-                        cryptoImage.push(content[i].image);
-                    }
-                    let embedArr = new Discord.MessageEmbed()
-                        .setTitle("Top Cryptocurrency by Market Cap")
-                        .setDescription(`All currency is in \`USD\` :money_with_wings: \n\n[Data Provided by CoinGecko](https://www.coingecko.com/en)\n\n`);
-
-                    for (let j = 0; j < cryptoName.length; j++) {
-                        embedArr.addFields({
-                            name: `${j + 1}. ${cryptoName[j].charAt(0).toUpperCase() + cryptoName[j].slice(1)}`,
-                            value: `\`${cryptoSymbol[j].toUpperCase()}\`  →  \`$${cryptoPrice[j].toString()}\``,
-                            inline: true
-                        });
-                    }
-                    message.channel.send({ embeds: [embedArr] });
+                    getListOfCoins(content);
                 });
         }
         else {
@@ -125,7 +129,7 @@ module.exports = new Command({
                         getSpecificCoinInfo(content, 0);
                     });
             }
-            else if (cryptoInput === "etherem" || cryptoInput === "eth" || cryptoInput === "ether") {
+            else if (cryptoInput === "ethereum" || cryptoInput === "eth" || cryptoInput === "ether") {
                 coinGeckoURL = `${coinGeckoURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=24&page=1&sparkline=false`;
                 got(coinGeckoURL, { JSON: true })
                     .catch((err) => {
