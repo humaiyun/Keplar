@@ -33,7 +33,7 @@ module.exports = new Command({
 
 
         const fortuneEmbed = new Discord.MessageEmbed()
-            .setTitle("🎱   Magic 8-Ball   🎱")
+            .setTitle("🎱 Magic 8-Ball")
             .setColor("RANDOM")
             .addFields({
                 name: "Question",
