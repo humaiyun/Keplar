@@ -15,6 +15,8 @@ module.exports = new Command({
         const cryptoInput = args.splice(1).join(" ");
         let coinGeckoURL = `https://api.coingecko.com/api/v3/`;
 
+        console.log("");
+
         function getSpecificCoinInfo(content, coinIndex) {
             const cryptoName = content[coinIndex].id.charAt(0).toUpperCase() + content[coinIndex].id.slice(1);
             const cryptoSymbol = content[coinIndex].symbol.toUpperCase();
@@ -42,7 +44,7 @@ module.exports = new Command({
                 currency: "USD"
             }).format(content[coinIndex].ath);
 
-            let embedArr = new Discord.MessageEmbed()
+            let cryptoEmbed = new Discord.MessageEmbed()
                 //.setDescription(`**Current Price**\n\`${cryptoPrice}\``)
                 .setAuthor(`${cryptoName} (${cryptoSymbol})`, cryptoImage)
                 .setFields({
@@ -70,7 +72,7 @@ module.exports = new Command({
                     value: `\`${cryptoMarketCap}\``,
                     inline: true
                 });
-            return message.channel.send({ embeds: [embedArr] })
+            return message.channel.send({ embeds: [cryptoEmbed] })
         }
 
         function getListOfCoins(content) {
@@ -84,18 +86,18 @@ module.exports = new Command({
                 cryptoPrice.push(content[i].current_price);
                 cryptoImage.push(content[i].image);
             }
-            let embedArr = new Discord.MessageEmbed()
+            let coinListEmbed = new Discord.MessageEmbed()
                 .setTitle("Top Cryptocurrency by Market Cap")
                 .setDescription(`All currency is in \`USD\` :money_with_wings: \n\n[Data Provided by CoinGecko](https://www.coingecko.com/en)\n\n`);
 
             for (let j = 0; j < cryptoName.length; j++) {
-                embedArr.addFields({
+                coinListEmbed.addFields({
                     name: `${j + 1}. ${cryptoName[j].charAt(0).toUpperCase() + cryptoName[j].slice(1)}`,
                     value: `\`${cryptoSymbol[j].toUpperCase()}\`  →  \`$${cryptoPrice[j].toString()}\``,
                     inline: true
                 });
             }
-            return message.channel.send({ embeds: [embedArr] });
+            return message.channel.send({ embeds: [coinListEmbed] });
         }
 
         if (!cryptoInput) { // get info of the top 24 crypto's by market cap
