@@ -54,7 +54,7 @@ module.exports = new Command({
                     inline: false
                 }, {
                     name: ":wrench: Utility",
-                    value: "`clear` | `define`",
+                    value: "`clear` | `define` | `stats`",
                     inline: false
                 });
             message.channel.send({ embeds: [helpEmbed] });
