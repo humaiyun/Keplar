@@ -50,7 +50,7 @@ module.exports = new Command({
             }
             //}
         }
-        console.log(`pokemon.js:53: pokemon number: ${pokemonInput}`);
+        //console.log(`pokemon.js:53: pokemon number: ${pokemonInput}`);
 
         // get request the api
         got(`https://pokeapi.co/api/v2/pokemon/${pokemonInput}/`, { JSON: true })
@@ -88,41 +88,37 @@ module.exports = new Command({
                     .setImage(`${pokemonFrontSprite}`)
                     .setFields({
                         name: "Index",
-                        value: `\`${pokemonIndex}\``,
+                        value: `\`\`\`${pokemonIndex}\`\`\``,
                         inline: true
                     }, {
                         name: `Height`,
-                        value: `\`${pokemonHeight} m\``,
+                        value: `\`\`\`${pokemonHeight} m\`\`\``,
                         inline: true
                     }, {
                         name: "Weight",
-                        value: `\`${pokemonWeight} kg\``,
+                        value: `\`\`\`${pokemonWeight} kg\`\`\``,
                         inline: true
                     }, {
                         name: "Type",
-                        value: `\`${pokemonType}\``,
+                        value: `\`\`\`${pokemonType}\`\`\``,
                         inline: true
                     }, {
                         name: "Base Health",
-                        value: `\`${pokemonHP}\``,
+                        value: `\`\`\`${pokemonHP}\`\`\``,
                         inline: true
                     }, {
                         name: "Base Attack",
-                        value: `\`${pokemonAP}\``,
-                        inline: true
-                    }, {
-                        name: "Move 1",
-                        value: `\`${arrayOfMoves[0] === undefined ? "N/A" : arrayOfMoves[0]}\``,
-                        inline: true
-                    }, {
-                        name: "Move 2",
-                        value: `\`${arrayOfMoves[1] === undefined ? "N/A" : arrayOfMoves[1]}\``,
-                        inline: true
-                    }, {
-                        name: "Move 3",
-                        value: `\`${arrayOfMoves[2] === undefined ? "N/A" : arrayOfMoves[2]}\``,
+                        value: `\`\`\`${pokemonAP}\`\`\``,
                         inline: true
                     });
+
+                for (let i = 0; i < arrayOfMoves.length; i++) {
+                    pokeEmbed.addFields({
+                        name: `Move ${i + 1}`,
+                        value: `\`\`\`${arrayOfMoves[i] === undefined ? "N/A" : arrayOfMoves[i]}\`\`\``,
+                        inline: true
+                    });
+                }
 
 
                 message.channel.send({ embeds: [pokeEmbed] });

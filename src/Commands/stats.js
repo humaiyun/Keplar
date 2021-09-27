@@ -30,6 +30,6 @@ module.exports = new Command({
             )
             .setColor("RANDOM")
 
-        message.reply({ embeds: [embed] })
+        message.channel.send({ embeds: [embed] })
     }
 })

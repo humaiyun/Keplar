@@ -55,27 +55,27 @@ module.exports = new Command({
                 .setAuthor(`${cryptoName} (${cryptoSymbol})`, cryptoImage)
                 .setFields({
                     name: ":first_place: Rank",
-                    value: `\`${cryptoRank}\``,
+                    value: `\`\`\`${cryptoRank}\`\`\``,
                     inline: true
                 }, {
                     name: ":dollar: Currect Price",
-                    value: `\`${cryptoPrice}\``,
+                    value: `\`\`\`${cryptoPrice}\`\`\``,
                     inline: true
                 }, {
                     name: "📊 All Time High",
-                    value: `\`${cryptoAllTimeHigh}\``,
+                    value: `\`\`\`${cryptoAllTimeHigh}\`\`\``,
                     inline: true
                 }, {
                     name: `:chart_with_upwards_trend: 24 Hour High`,
-                    value: `\`${cryptoHigh24}\``,
+                    value: `\`\`\`${cryptoHigh24}\`\`\``,
                     inline: true
                 }, {
                     name: ":chart_with_downwards_trend: 24 Hour Low",
-                    value: `\`${cryptoLow24}\``,
+                    value: `\`\`\`${cryptoLow24}\`\`\``,
                     inline: true
                 }, {
                     name: ":chart: Market Cap",
-                    value: `\`${cryptoMarketCap}\``,
+                    value: `\`\`\`${cryptoMarketCap}\`\`\``,
                     inline: true
                 });
             return message.channel.send({ embeds: [cryptoEmbed] })
