@@ -17,6 +17,12 @@ module.exports = new Command({
 
         console.log("");
 
+        /**
+         * Get detailed info of a specific cryptocurrency
+         * @param {json} content 
+         * @param {int} coinIndex 
+         * @returns discord embedded message
+         */
         function getSpecificCoinInfo(content, coinIndex) {
             const cryptoName = content[coinIndex].id.charAt(0).toUpperCase() + content[coinIndex].id.slice(1);
             const cryptoSymbol = content[coinIndex].symbol.toUpperCase();
@@ -75,6 +81,11 @@ module.exports = new Command({
             return message.channel.send({ embeds: [cryptoEmbed] })
         }
 
+        /**
+         * 
+         * @param {json} content 
+         * @returns the list of the top 24 cryptocurrency by total market cap
+         */
         function getListOfCoins(content) {
             const cryptoName = [];
             const cryptoSymbol = [];
