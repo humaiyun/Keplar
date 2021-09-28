@@ -13,9 +13,11 @@ module.exports = new Command({
     permission: "SEND_MESSAGES",
     async run(message, args, client) {
 
-        const cmd = requireFolder("./src/Commands", { exclude: ["disabled", "help.js"] });
+        const content = JSON.parse(JSON.stringify(requireFolder("./src/Commands", { exclude: ["disabled", "help.js"] })));
 
-        let cmdInput = args.splice(1).join(" ");
+        const cmdInput = args.splice(1).join(" ");
+
+        console.log("help.js:20: cmdInput: '" + cmdInput + "'");
 
         //console.log(`\n20: Cmd Name: ${cmd.pokemon.name}\nCmd Description: ${cmd.pokemon.description}`);
 
@@ -66,15 +68,11 @@ module.exports = new Command({
             message.channel.send({ embeds: [helpEmbed] });
         }
 
-        // else {
-        //     if (cmdInput == "xkcd") {
+        else {
 
-        //         console.log(specificCommandEmbed(cmd, cmdInput));
+            console.log(content);
 
-        //     }
-
-
-        // }
+        }
 
 
     }
