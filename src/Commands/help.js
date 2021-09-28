@@ -13,19 +13,11 @@ module.exports = new Command({
     permission: "SEND_MESSAGES",
     async run(message, args, client) {
 
-
         const cmd = requireFolder("./src/Commands", { exclude: ["disabled", "help.js"] });
 
         let cmdInput = args.splice(1).join(" ");
 
-
         //console.log(`\n20: Cmd Name: ${cmd.pokemon.name}\nCmd Description: ${cmd.pokemon.description}`);
-
-
-        // if (cmdInput == cmd.cmdInput.name) {
-        //     console.log("25: this works");
-        // }
-
 
         if (!cmdInput) {
             const helpEmbed = new Discord.MessageEmbed()
@@ -48,27 +40,27 @@ module.exports = new Command({
                     inline: true
                 }, {
                     name: ":nazar_amulet: Information",
-                    value: "`help` | `helpinfo` | `ping`",
+                    value: "`help` | `helpinfo` | `ping` | `stats`",
                     inline: false
                 }, {
                     name: ":camera: Images",
-                    value: "`meme` | `pokemon` | `xkcd`",
+                    value: "`meme` | `pokemon` | `xkcd` | `axolotl` | `cat`",
                     inline: false
                 }, {
                     name: ":video_game: Fun",
-                    value: "`ud` | `advice` | `8ball`",
+                    value: "`coinflip` | `advice` | `8ball`",
                     inline: false
                 }, {
                     name: ":coin: Cryptocurrency",
                     value: "`crypto`",
                     inline: false
                 }, {
-                    name: ":game_die: Gamble",
-                    value: "`coinflip`",
+                    name: ":game_die: Misc.",
+                    value: "`ud` | `define`",
                     inline: false
                 }, {
                     name: ":wrench: Utility",
-                    value: "`clear` | `define` | `stats`",
+                    value: "`clear`",
                     inline: false
                 });
             message.channel.send({ embeds: [helpEmbed] });
