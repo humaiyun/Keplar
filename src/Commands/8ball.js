@@ -27,7 +27,9 @@ module.exports = new Command({
             const invalidEmbed = new Discord.MessageEmbed()
                 .setTitle("Error")
                 .setColor("RED")
-                .setDescription(`\`Provide the Magic 8-Ball a question to ask\``);
+                .setTimestamp()
+                .setFooter(client.user.username, client.user.displayAvatarURL())
+                .setDescription(`\`\`\`Provide the Magic 8-Ball a question to ask\`\`\``);
             return message.reply({ embeds: [invalidEmbed] });
         }
 
@@ -35,13 +37,15 @@ module.exports = new Command({
         const fortuneEmbed = new Discord.MessageEmbed()
             .setTitle("🎱 Magic 8-Ball")
             .setColor("RANDOM")
+            .setTimestamp()
+            .setFooter(client.user.username, client.user.displayAvatarURL())
             .addFields({
                 name: "Question",
-                value: `\`${questionInput}\``,
+                value: `\`\`\`${questionInput}\`\`\``,
                 inline: false
             }, {
                 name: "Answer",
-                value: `\`${fortunes[Math.floor(Math.random() * fortunes.length)]}\``,
+                value: `\`\`\`${fortunes[Math.floor(Math.random() * fortunes.length)]}\`\`\``,
                 inline: false
             })
             .setFooter(message.member.displayName, message.author.displayAvatarURL({ dynamic: true }))

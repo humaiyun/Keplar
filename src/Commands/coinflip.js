@@ -15,8 +15,10 @@ module.exports = new Command({
         }
 
         const embed = new Discord.MessageEmbed()
-            .setTitle(":coin: You flipped a coin!")
-            .setDescription(`You got **${headsOrTails(daCoin)}**`);
+            .setTitle(`You got **\`${headsOrTails(daCoin)}\`** :coin:`)
+            .setTimestamp()
+            .setFooter(client.user.username, client.user.displayAvatarURL())
+        //.setDescription(`You got **\`${headsOrTails(daCoin)}\`**`);
         message.channel.send({ embeds: [embed] });
     }
 });

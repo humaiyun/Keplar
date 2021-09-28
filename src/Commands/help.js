@@ -13,17 +13,27 @@ module.exports = new Command({
     permission: "SEND_MESSAGES",
     async run(message, args, client) {
 
-        const cmd = requireFolder("./src/Commands", { exclude: ["disabled", "help.js"] });
-        //console.log(cmd);
 
-        const cmdInput = args.splice(1).join(" ");
-        //console.log("21:" + cmd.xkcd.usage);
+        const cmd = requireFolder("./src/Commands", { exclude: ["disabled", "help.js"] });
+
+        let cmdInput = args.splice(1).join(" ");
+
+
+        //console.log(`\n20: Cmd Name: ${cmd.pokemon.name}\nCmd Description: ${cmd.pokemon.description}`);
+
+
+        // if (cmdInput == cmd.cmdInput.name) {
+        //     console.log("25: this works");
+        // }
+
 
         if (!cmdInput) {
             const helpEmbed = new Discord.MessageEmbed()
                 .setColor("RANDOM")
                 .setAuthor("Command List", message.author.displayAvatarURL({ dynamic: true }))
                 .setDescription(`Here are the list of commands!\nFor more info on specific commands, type \`${config.prefix}helpinfo\``)
+                .setTimestamp()
+                .setFooter(client.user.username, client.user.displayAvatarURL())
                 .addFields({
                     name: ":robot: Bot Version",
                     value: `\`${package.version}\``,
@@ -41,8 +51,12 @@ module.exports = new Command({
                     value: "`help` | `helpinfo` | `ping`",
                     inline: false
                 }, {
+                    name: ":camera: Images",
+                    value: "`meme` | `pokemon` | `xkcd`",
+                    inline: false
+                }, {
                     name: ":video_game: Fun",
-                    value: "`ud` | `meme` | `advice` | `pokemon` | `xkcd` | `8ball`",
+                    value: "`ud` | `advice` | `8ball`",
                     inline: false
                 }, {
                     name: ":coin: Cryptocurrency",

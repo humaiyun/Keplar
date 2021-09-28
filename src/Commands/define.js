@@ -18,6 +18,8 @@ module.exports = new Command({
             const invalidEmbed = new Discord.MessageEmbed()
                 .setTitle("Error")
                 .setColor("RED")
+                .setTimestamp()
+                .setFooter(client.user.username, client.user.displayAvatarURL())
                 .setDescription(`Enter a word to get the definition of`);
             return message.reply({ embeds: [invalidEmbed] });
         }
@@ -26,6 +28,8 @@ module.exports = new Command({
                 const notAWordEmbed = new Discord.MessageEmbed()
                     .setColor("RANDOM")
                     .setTitle("No Definitions Found")
+                    .setTimestamp()
+                    .setFooter(client.user.username, client.user.displayAvatarURL())
                     .setDescription(`Sorry pal, we couldn't find definitions for the word you were looking for. \n\nYou can try the search again at later time or head to the web instead.`);
 
                 return message.channel.send({ embeds: [notAWordEmbed] });
@@ -44,6 +48,8 @@ module.exports = new Command({
                 const throwEmbed = new Discord.MessageEmbed()
                     .setAuthor("Error")
                     .setColor("RED")
+                    .setTimestamp()
+                    .setFooter(client.user.username, client.user.displayAvatarURL())
                     .setDescription(`Error Message: \`${err}\``);
                 message.channel.send({ embeds: [throwEmbed] });
             })
@@ -60,11 +66,13 @@ module.exports = new Command({
                 const wordEmbed = new Discord.MessageEmbed()
                     .setColor("RANDOM")
                     .setTitle(wordWord)
+                    .setTimestamp()
+                    .setFooter(client.user.username, client.user.displayAvatarURL())
                     .setDescription(`**Definition**\n\`${wordDefinition}\`\n\n**Orirgin**\n\`${wordOrigin === undefined ? "None given" : wordOrigin}\`\n\n**Example**\n\`${wordExample === undefined ? "None given" : wordExample}\``)
                     //.setImage(xkcdImage)
                     .setURL(`https://www.google.com/search?q=${word}%20definition`)
                     .addFields({
-                        name: `Part of speech`,
+                        name: `Part of Speech`,
                         value: `\`${wordPartOfSpeech === undefined ? "None given" : wordPartOfSpeech}\``,
                         inline: true
                     }, {

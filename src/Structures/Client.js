@@ -29,7 +29,7 @@ class Client extends Discord.Client {
 	start(token) {
 
 		/* Command Handler */
-		fs.readdirSync("./src/Commands")
+		fs.readdirSync("./src/Commands/")
 			.filter(file => file.endsWith(".js"))
 			.forEach(file => {
 				/**

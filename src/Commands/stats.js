@@ -20,15 +20,34 @@ module.exports = new Command({
 
         const embed = new Discord.MessageEmbed()
             .setTitle(`${message.client.user.username} Stats`)
-            .addFields(
-                { name: "Servers:", value: `\`\`\`${client.guilds.cache.size}\`\`\``, inline: true },
-                { name: "Users:", value: `\`\`\`${client.users.cache.size}\`\`\``, inline: true },
-                { name: "Channels", value: `\`\`\`${client.channels.cache.size}\`\`\``, inline: true },
-                { name: "Uptime: ", value: uptime, inline: true },
-                { name: "Ping:", value: `\`\`\`${Math.round(message.client.ws.ping)} ms\`\`\``, inline: true },
-                { name: "RAM: ", value: `\`\`\`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB\`\`\``, inline: true },
-            )
+            .addFields({
+                name: "Servers",
+                value: `\`\`\`${client.guilds.cache.size}\`\`\``,
+                inline: true
+            }, {
+                name: "Users",
+                value: `\`\`\`${client.users.cache.size}\`\`\``,
+                inline: true
+            }, {
+                name: "Channels",
+                value: `\`\`\`${client.channels.cache.size}\`\`\``,
+                inline: true
+            }, {
+                name: "Uptime",
+                value: uptime,
+                inline: true
+            }, {
+                name: "Ping",
+                value: `\`\`\`${Math.round(message.client.ws.ping)} ms\`\`\``,
+                inline: true
+            }, {
+                name: "RAM",
+                value: `\`\`\`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB\`\`\``,
+                inline: true
+            })
             .setColor("RANDOM")
+            .setTimestamp()
+            .setFooter(client.user.username, client.user.displayAvatarURL());
 
         message.channel.send({ embeds: [embed] })
     }

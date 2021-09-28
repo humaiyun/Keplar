@@ -39,6 +39,8 @@ module.exports = new Command({
                     const invalidEmbed = new Discord.MessageEmbed()
                         .setTitle("Error")
                         .setColor("RED")
+                        .setTimestamp()
+                        .setFooter(client.user.username, client.user.displayAvatarURL())
                         .setDescription(`Invalid index \`${pokemonInput}\`\n\nPick a number between \`${minIndex}\` and \`${maxIndex}\``);
                     return message.reply({ embeds: [invalidEmbed] });
                 }
@@ -58,6 +60,8 @@ module.exports = new Command({
                 const throwEmbed = new Discord.MessageEmbed()
                     .setAuthor("Error")
                     .setColor("RED")
+                    .setTimestamp()
+                    .setFooter(client.user.username, client.user.displayAvatarURL())
                     .setDescription(`\`${pokemonInput}\` is an invalid Pokemon name. \n\nIf you need help, type \`${config.prefix}helpinfo\`\n\n` + `Error Message: \`${err}\``);
                 message.channel.send({ embeds: [throwEmbed] });
             })
@@ -86,6 +90,8 @@ module.exports = new Command({
                     .setColor("RANDOM")
                     .setAuthor(`${pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1)}`, `${pokemonFrontSprite}`, `https://pokemon.fandom.com/wiki/${pokemonName}`)
                     .setImage(`${pokemonFrontSprite}`)
+                    .setTimestamp()
+                    .setFooter(client.user.username, client.user.displayAvatarURL())
                     .setFields({
                         name: "Index",
                         value: `\`\`\`${pokemonIndex}\`\`\``,

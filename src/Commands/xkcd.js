@@ -42,6 +42,8 @@ module.exports = new Command({
                         const invalidEmbed = new Discord.MessageEmbed()
                             .setTitle("Error")
                             .setColor("RED")
+                            .setTimestamp()
+                            .setFooter(client.user.username, client.user.displayAvatarURL())
                             .setDescription(`Invalid index \`${comicNumber}\`\n\nPick a number between \`${minIndex}\` and \`${maxIndex}\``);
                         return message.reply({ embeds: [invalidEmbed] });
                     }
@@ -53,6 +55,8 @@ module.exports = new Command({
                     const invalidEmbed = new Discord.MessageEmbed()
                         .setTitle("Error")
                         .setColor("RED")
+                        .setTimestamp()
+                        .setFooter(client.user.username, client.user.displayAvatarURL())
                         .setDescription(`Invalid index \`${comicNumber}\`\n\nPick a number between \`${minIndex}\` and \`${maxIndex}\``);
                     return message.reply({ embeds: [invalidEmbed] });
                 }
@@ -65,6 +69,8 @@ module.exports = new Command({
                 const throwEmbed = new Discord.MessageEmbed()
                     .setAuthor("Error")
                     .setColor("RED")
+                    .setTimestamp()
+                    .setFooter(client.user.username, client.user.displayAvatarURL())
                     .setDescription(`Error Message: \`${err}\``);
                 message.channel.send({ embeds: [throwEmbed] });
             })
@@ -84,6 +90,8 @@ module.exports = new Command({
                     .setTitle(xkcdTitle)
                     .setDescription(`${xkcdAlt}\n`)
                     .setImage(xkcdImage)
+                    .setTimestamp()
+                    .setFooter(client.user.username, client.user.displayAvatarURL())
                     .setURL(`https://xkcd.com/${xkcdNum}/`)
                     .addFields({
                         name: `Comic Number`,

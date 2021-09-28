@@ -53,6 +53,8 @@ module.exports = new Command({
             let cryptoEmbed = new Discord.MessageEmbed()
                 //.setDescription(`**Current Price**\n\`${cryptoPrice}\``)
                 .setAuthor(`${cryptoName} (${cryptoSymbol})`, cryptoImage)
+                .setTimestamp()
+                .setFooter(client.user.username, client.user.displayAvatarURL())
                 .setFields({
                     name: ":first_place: Rank",
                     value: `\`\`\`${cryptoRank}\`\`\``,
@@ -99,7 +101,9 @@ module.exports = new Command({
             }
             let coinListEmbed = new Discord.MessageEmbed()
                 .setTitle("Top Cryptocurrency by Market Cap")
-                .setDescription(`All currency is in \`USD\` :money_with_wings: \n\n[Data Provided by CoinGecko](https://www.coingecko.com/en)\n\n`);
+                .setDescription(`All currency is in \`USD\` :money_with_wings: \n\n[Data Provided by CoinGecko](https://www.coingecko.com/en)\n\n`)
+                .setTimestamp()
+                .setFooter(client.user.username, client.user.displayAvatarURL());
 
             for (let j = 0; j < cryptoName.length; j++) {
                 coinListEmbed.addFields({
@@ -134,6 +138,8 @@ module.exports = new Command({
                         const throwEmbed = new Discord.MessageEmbed()
                             .setAuthor("Error")
                             .setColor("RED")
+                            .setTimestamp()
+                            .setFooter(client.user.username, client.user.displayAvatarURL())
                             .setDescription(`Error Message: \`${err}\``);
                         message.channel.send({ embeds: [throwEmbed] });
                     })
@@ -149,6 +155,8 @@ module.exports = new Command({
                         const throwEmbed = new Discord.MessageEmbed()
                             .setAuthor("Error")
                             .setColor("RED")
+                            .setTimestamp()
+                            .setFooter(client.user.username, client.user.displayAvatarURL())
                             .setDescription(`Error Message: \`${err}\``);
                         message.channel.send({ embeds: [throwEmbed] });
                     })
@@ -164,6 +172,8 @@ module.exports = new Command({
                         const throwEmbed = new Discord.MessageEmbed()
                             .setAuthor("Error")
                             .setColor("RED")
+                            .setTimestamp()
+                            .setFooter(client.user.username, client.user.displayAvatarURL())
                             .setDescription(`Error Message: \`${err}\``);
                         message.channel.send({ embeds: [throwEmbed] });
                     })
@@ -176,6 +186,8 @@ module.exports = new Command({
                 const invalidEmbed = new Discord.MessageEmbed()
                     .setTitle("Error")
                     .setColor("RED")
+                    .setTimestamp()
+                    .setFooter(client.user.username, client.user.displayAvatarURL())
                     .setDescription(`\`${cryptoInput}\` is an invalid name or symbol`);
                 return message.reply({ embeds: [invalidEmbed] });
             }

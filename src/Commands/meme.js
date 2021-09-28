@@ -51,6 +51,7 @@ module.exports = new Command({
                         value: `${author}`,
                         inline: true
                     })
+                    .setTimestamp()
                     .setFooter(upvotes + downvotes + comments);
                 message.channel.send({ embeds: [memeEmbed] });
             });

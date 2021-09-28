@@ -16,6 +16,8 @@ module.exports = new Command({
             const nothingEmbed = new Discord.MessageEmbed()
                 .setAuthor("Error")
                 .setColor("RED")
+                .setTimestamp()
+                .setFooter(client.user.username, client.user.displayAvatarURL())
                 .setDescription(`\`${amount == undefined ? "Nothing" : amount}\` is not a valid amount!`);
 
             return message.channel.send({ embeds: [nothingEmbed] });
@@ -27,6 +29,8 @@ module.exports = new Command({
             const overLimitEmbed = new Discord.MessageEmbed()
                 .setAuthor("Error")
                 .setColor("RED")
+                .setTimestamp()
+                .setFooter(client.user.username, client.user.displayAvatarURL())
                 .setDescription(`You cannot clear more than \`75\` messages!`);
             return message.channel.send({ embeds: [overLimitEmbed] });
             //return message.reply("You cannot clear more than 75 messages!");
@@ -37,6 +41,8 @@ module.exports = new Command({
             const underLimitEmbed = new Discord.MessageEmbed()
                 .setAuthor("Error")
                 .setColor("RED")
+                .setTimestamp()
+                .setFooter(client.user.username, client.user.displayAvatarURL())
                 .setDescription(`You must clear at least \`1\` message!`);
             return message.channel.send({ embeds: [underLimitEmbed] });
             //return message.reply("You must delete at least 1 message!");

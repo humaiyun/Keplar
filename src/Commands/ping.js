@@ -9,7 +9,12 @@ module.exports = new Command({
 	permission: "SEND_MESSAGES",
 	async run(message, args, client) {
 
-		const pingEmbed = new Discord.MessageEmbed().setDescription(`:satellite: **Ping:** ${client.ws.ping} ms`);
+		const pingEmbed = new Discord.MessageEmbed()
+			//.setTitle("\u200B")
+			.setFields({ name: ":satellite: **Ping:**", value: `\`\`\`${client.ws.ping} ms\`\`\`` })
+			.setColor("RANDOM")
+			.setTimestamp()
+			.setFooter(client.user.username, client.user.displayAvatarURL());
 		message.channel.send({ embeds: [pingEmbed] });
 
 		// const newEmbed = new Discord.MessageEmbed(message.embeds[0])

@@ -16,6 +16,8 @@ module.exports = new Command({
             const throwNoWordEmbed = new Discord.MessageEmbed()
                 .setAuthor("Error")
                 .setColor("RED")
+                .setTimestamp()
+                .setFooter(client.user.username, client.user.displayAvatarURL())
                 .setDescription(`You must specify a word!\nExample: \`${config.prefix}ud hello\``);
             return message.reply({ embeds: [throwNoWordEmbed] });
         }
@@ -24,6 +26,8 @@ module.exports = new Command({
             const throwEmbed = new Discord.MessageEmbed()
                 .setAuthor("Error")
                 .setColor("RED")
+                .setTimestamp()
+                .setFooter(client.user.username, client.user.displayAvatarURL())
                 .setDescription(`A definition for "${word}" could not be found. \n\nIf you need help, type \`${config.prefix}helpinfo\`\n\n` + `Error Message: \`${err}\``);
 
             message.reply({ embeds: [throwEmbed] });
@@ -35,22 +39,23 @@ module.exports = new Command({
             .setURL(definition.urbanURL)
             .addFields({
                 name: ":notebook_with_decorative_cover: Description",
-                value: `${definition.definition}\n` ? `${definition.definition}\n` : "No description found...",
+                value: `\`${definition.definition}\`\n` ? `\`${definition.definition}\`\n` : "\`No description found...\`",
                 inline: false
             }, {
                 name: ":bookmark: Example",
-                value: `${definition.example}\n` ? `${definition.example}\n` : "No example found...",
+                value: `\`${definition.example}\`\n` ? `\`${definition.example}\`\n` : "\`No example found...\`",
                 inline: false
             }, {
                 name: ":writing_hand: Author",
-                value: `${definition.author}\n` ? `${definition.author}\n` : "No author found...",
+                value: `\`${definition.author}\`\n` ? `\`${definition.author}\`\n` : "\`No author found...\`",
                 inline: true
             }, {
                 name: ":bar_chart: Rating",
-                value: `:thumbsup:     ${definition.thumbsUp}     |     :thumbsdown:     ${definition.thumbsDown} \n`,
+                value: `:thumbsup:     \`${definition.thumbsUp}\`     |     :thumbsdown:     \`${definition.thumbsDown}\` \n`,
                 inline: true
             })
-            .setTimestamp();
+            .setTimestamp()
+            .setFooter(client.user.username, client.user.displayAvatarURL());
 
 
         const sendEmbed = () => {
