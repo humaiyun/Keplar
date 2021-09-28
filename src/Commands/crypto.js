@@ -7,15 +7,13 @@ const got = require("got");
 
 module.exports = new Command({
     name: "crypto",
-    description: "Returns information for cryptocurrencies",
+    description: "Get the latest market information for various cryptocurrencies",
     usage: `\`${config.prefix}crypto [name | symbol]\``,
     permission: "SEND_MESSAGES",
 
     async run(message, args, client) {
         const cryptoInput = args.splice(1).join(" ");
         let coinGeckoURL = `https://api.coingecko.com/api/v3/`;
-
-        console.log("");
 
         /**
          * Get detailed info of a specific cryptocurrency
@@ -54,6 +52,7 @@ module.exports = new Command({
                 //.setDescription(`**Current Price**\n\`${cryptoPrice}\``)
                 .setAuthor(`${cryptoName} (${cryptoSymbol})`, cryptoImage)
                 .setTimestamp()
+                .setColor("RANDOM")
                 .setFooter(client.user.username, client.user.displayAvatarURL())
                 .setFields({
                     name: ":first_place: Rank",

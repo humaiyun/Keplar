@@ -8,7 +8,7 @@ const got = require("got");
 module.exports = new Command({
     name: "define",
     description: "Get the dictionary definition of a word",
-    usage: `\`${config.prefix}define <word | sentence>\``,
+    usage: `\`${config.prefix}define <word>\``,
     permission: "SEND_MESSAGES",
 
     async run(message, args, client) {

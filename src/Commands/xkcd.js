@@ -7,8 +7,8 @@ const got = require("got");
 
 module.exports = new Command({
     name: "xkcd",
-    description: "Returns a specific, random, or latest xkcd comic",
-    usage: `\`${config.prefix}xkcd [number | latest | l | -l]\``,
+    description: `Generate a random xkcd comic, or a specific one by number.\n\nNote: For the latest comic, use ${config.prefix}xkcd [latest | l]`,
+    usage: `\`${config.prefix}xkcd [number | latest | l]\``,
     permission: "SEND_MESSAGES",
 
     async run(message, args, client) {
@@ -30,7 +30,7 @@ module.exports = new Command({
         }
         else {
             // Get latest comic
-            if (comicNumber === "latest" || comicNumber === "l" || comicNumber === "-l") {
+            if (comicNumber === "latest" || comicNumber === "l") {
                 comicNumber = maxIndex;
                 xkcdURL = `https://xkcd.com/info.0.json`;
                 //console.log(`xkcd.js:31: Comic Number: ${comicNumber}`);

@@ -4,7 +4,7 @@ const config = require("../Data/config.json");
 
 module.exports = new Command({
 	name: "ping",
-	description: "Shows the ping of the bot",
+	description: "Displays the ping of the bot",
 	usage: `\`${config.prefix}ping\``,
 	permission: "SEND_MESSAGES",
 	async run(message, args, client) {

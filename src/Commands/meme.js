@@ -7,7 +7,7 @@ const config = require("../Data/config.json");
 
 module.exports = new Command({
     name: "meme",
-    description: "Get a random meme from reddit",
+    description: "Generate a random meme from Reddit",
     usage: `\`${config.prefix}meme\``,
     permission: "SEND_MESSAGES",
 
@@ -21,11 +21,13 @@ module.exports = new Command({
                 const throwEmbed = new Discord.MessageEmbed()
                     .setAuthor("Error")
                     .setColor("RED")
-                    .setDescription(`Something wrong happened... \n\nIf you need help, type \`${config.prefix}helpinfo\`\n\n` + `Error Message: \`${err}\``);
+                    .setDescription(`Something wrong happened... \n\nIf you need help, type \`${config.prefix}help meme\`\n\n` + `Error Message: \`${err}\``);
                 message.reply({ embeds: [throwEmbed] });
             })
             .then(result => {
                 const content = JSON.parse(result.body);
+
+                console.log(content);
 
                 const redditURL = content[0].data.children[0].data.url;
                 const redditTitle = content[0].data.children[0].data.title;
@@ -43,11 +45,11 @@ module.exports = new Command({
                     .setImage(redditURL)
                     .setURL(`https://www.reddit.com${permalink}`)
                     .addFields({
-                        name: ":snowman: Subreddit",
+                        name: ":snowman:   Subreddit",
                         value: `${subreddit}`,
                         inline: true
                     }, {
-                        name: ":japanese_goblin: User",
+                        name: ":japanese_goblin:   User",
                         value: `${author}`,
                         inline: true
                     })

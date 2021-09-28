@@ -7,7 +7,7 @@ const got = require("got");
 
 module.exports = new Command({
     name: "axolotl",
-    description: "Get a random image and fact of an axolotl",
+    description: "Generate a random image and fact of an axolotl",
     usage: `\`${config.prefix}axolotl\``,
     permission: "SEND_MESSAGES",
 

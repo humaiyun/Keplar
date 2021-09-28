@@ -5,9 +5,9 @@ const Command = require("../Structures/Command.js");
 const got = require("got");
 
 module.exports = new Command({
-    name: "8ball",
-    description: "Ask the Magic 8 Ball a question to get a fortune",
-    usage: `\`${config.prefix}8ball [sentence]`,
+    name: "_8ball",
+    description: "Receive a fortune from the Magic 8-Ball",
+    usage: `\`${config.prefix}_8ball <sentence | question>\``,
     permission: "SEND_MESSAGES",
 
     async run(message, args, client) {
