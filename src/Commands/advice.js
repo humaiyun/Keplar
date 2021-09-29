@@ -28,8 +28,8 @@ module.exports = new Command({
 
                 const adviceEmbed = new Discord.MessageEmbed()
                     .setColor("RANDOM")
-                    .setTimestamp()
-                    .setFooter(client.user.username, client.user.displayAvatarURL())
+                    // .setTimestamp()
+                    // .setFooter(client.user.username, client.user.displayAvatarURL())
                     .setDescription(advice);
 
                 message.channel.send({ embeds: [adviceEmbed] });

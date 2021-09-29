@@ -4,7 +4,11 @@ const AsciiTable = require("ascii-table");
 module.exports = new Event("ready", client => {
 	const table = new AsciiTable();
 	table.addRow(`${client.user.tag} has loaded! 🎈`);
-	client.user.setActivity("joe mama.", { type: "WATCHING" });
+
+	// random[Math.floor(Math.random() * random.length)];
+
+	client.user.setActivity("the Bot Olympics", { type: "COMPETING" });
+
 	// client.user.setPresence({
 	// 	status: "idle",  // dnd, idle, invisible, online
 	// 	name: "!help"

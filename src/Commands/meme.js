@@ -27,7 +27,7 @@ module.exports = new Command({
             .then(result => {
                 const content = JSON.parse(result.body);
 
-                console.log(content);
+                //console.log(content);
 
                 const redditURL = content[0].data.children[0].data.url;
                 const redditTitle = content[0].data.children[0].data.title;

@@ -7,7 +7,7 @@ const got = require("got");
 
 module.exports = new Command({
     name: "crypto",
-    description: "Get the latest market information for various cryptocurrencies\n\nData provided by CoinGecko",
+    description: "Get the latest market information for various cryptocurrencies\n\nNote: This supports the top 200 cryptocurrency by market cap.\n\nData provided by CoinGecko",
     usage: `\`${config.prefix}crypto [name | symbol | list]\``,
     permission: "SEND_MESSAGES",
 
@@ -124,7 +124,7 @@ module.exports = new Command({
         /**
          * Cycles through the JSON via HTTPS GET Request then checks for the key and values with respect to the input. 
          * Returns the coin info if found, otherwise returns an error embed
-         * @param {JSON} content 
+         * @param {JSON | URL | string} content 
          * @param {string} input {user input} 
          * @returns 
          */
@@ -186,7 +186,7 @@ module.exports = new Command({
                 });
         }
         else if (cryptoInput == "list") {
-            coinGeckoURL = `${coinGeckoURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=200&page=1&sparkline=false`;
+            coinGeckoURL = `${coinGeckoURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=201&page=1&sparkline=false`;
             got(coinGeckoURL, { JSON: true })
                 .catch((err) => {
                     const throwEmbed = new Discord.MessageEmbed()
@@ -219,7 +219,7 @@ module.exports = new Command({
                 });
         }
         else {
-            coinGeckoURL = `${coinGeckoURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=200&page=1&sparkline=false`;
+            coinGeckoURL = `${coinGeckoURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=201&page=1&sparkline=false`;
             getCoin(coinGeckoURL, cryptoInput);
             // if (cryptoInput === "bitcoin" || cryptoInput === "btc") { getCoin(coinGeckoURL, cryptoInput); }
             // else if (cryptoInput === "ethereum" || cryptoInput === "eth" || cryptoInput === "ether") { getCoin(coinGeckoURL, cryptoInput); }

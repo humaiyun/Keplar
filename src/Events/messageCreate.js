@@ -9,13 +9,13 @@ module.exports = new Event("messageCreate", (client, message) => {
 
 	const args = message.content.substring(client.prefix.length).split(/ +/);
 
-	const command = client.commands.find(cmd => cmd.name == args[0]);
+	const command = client.commands.find(cmd => cmd.name == args[0].toLowerCase());
 
 	if (!command) {
 		const invalidEmbed = new Discord.MessageEmbed()
 			.setAuthor("Error")
 			.setColor("RED")
-			.setDescription(`\`${args[0]}\` is not a supported command! For a list of all supported commands type \`${config.prefix}help\``);
+			.setDescription(`\`${args[0]}\` is not a supported command! \n\nFor a list of all supported commands type \`${config.prefix}help\``);
 		return message.reply({ embeds: [invalidEmbed] });
 		//return message.reply(`${args[0]} is not a valid command!`);
 	}
@@ -30,10 +30,6 @@ module.exports = new Event("messageCreate", (client, message) => {
 		return message.reply({ embeds: [noPermissionEmbed] });
 		//return message.reply(`You do not have the "${command.permission}" permission to run this command!`);
 	}
-
-	// if(command && args[1] == ) {
-
-	// }
 
 	command.run(message, args, client);
 });
