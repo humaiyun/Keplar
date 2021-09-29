@@ -7,26 +7,33 @@ const got = require("got");
 
 module.exports = new Command({
     name: "crypto",
-    description: "Get the latest market information for various cryptocurrencies",
-    usage: `\`${config.prefix}crypto [name | symbol]\``,
+    description: "Get the latest market information for various cryptocurrencies\n\nData provided by CoinGecko",
+    usage: `\`${config.prefix}crypto [name | symbol | list]\``,
     permission: "SEND_MESSAGES",
 
     async run(message, args, client) {
-        const cryptoInput = args.splice(1).join(" ");
+        const cryptoInput = args.splice(1).join(" ").toLowerCase();
         let coinGeckoURL = `https://api.coingecko.com/api/v3/`;
 
         /**
-         * Get detailed info of a specific cryptocurrency
-         * @param {json} content 
-         * @param {int} coinIndex 
+         * Get detailed info of a specific cryptocurrency. Returns an embedded message.
+         * @param {JSON} content 
+         * @param {string} coinIndex 
          * @returns discord embedded message
          */
-        function getSpecificCoinInfo(content, coinIndex) {
+        function getSpecificCoinInfoEmbed(content, coinIndex) {
             const cryptoName = content[coinIndex].id.charAt(0).toUpperCase() + content[coinIndex].id.slice(1);
             const cryptoSymbol = content[coinIndex].symbol.toUpperCase();
             const cryptoImage = content[coinIndex].image;
-            const cryptoLastUpdated = content[coinIndex].last_updated;
+            //const cryptoLastUpdated = content[coinIndex].last_updated;
             const cryptoRank = content[coinIndex].market_cap_rank;
+
+            const cryptoPriceChange24h = content[coinIndex].price_change_percentage_24h;
+            const cryptoPercentChange24h = new Intl.NumberFormat("en-CA", {
+                style: "currency",
+                currency: "USD"
+            }).format(content[coinIndex].price_change_24h);
+
             const cryptoPrice = new Intl.NumberFormat("en-CA", {
                 style: "currency",
                 currency: "USD"
@@ -83,11 +90,11 @@ module.exports = new Command({
         }
 
         /**
-         * 
-         * @param {json} content 
-         * @returns the list of the top 24 cryptocurrency by total market cap
+         * Get the list of the top 24 cryptocurrency by total market cap. Returns an embedded message.
+         * @param {JSON} content 
+         * @returns discord embedded message
          */
-        function getListOfCoins(content) {
+        function getCryptoListEmbed(content) {
             const cryptoName = [];
             const cryptoSymbol = [];
             const cryptoPrice = [];
@@ -100,7 +107,7 @@ module.exports = new Command({
             }
             let coinListEmbed = new Discord.MessageEmbed()
                 .setTitle("Top Cryptocurrency by Market Cap")
-                .setDescription(`All currency is in \`USD\` :money_with_wings: \n\n[Data Provided by CoinGecko](https://www.coingecko.com/en)\n\n`)
+                .setDescription(`All prices are in \`USD\` :money_with_wings: \n\n[Data Provided by CoinGecko](https://www.coingecko.com/en)\n\n`)
                 .setTimestamp()
                 .setFooter(client.user.username, client.user.displayAvatarURL());
 
@@ -114,7 +121,56 @@ module.exports = new Command({
             return message.channel.send({ embeds: [coinListEmbed] });
         }
 
-        if (!cryptoInput) { // get info of the top 24 crypto's by market cap
+        /**
+         * Cycles through the JSON via HTTPS GET Request then checks for the key and values with respect to the input. 
+         * Returns the coin info if found, otherwise returns an error embed
+         * @param {JSON} content 
+         * @param {string} input {user input} 
+         * @returns 
+         */
+        function getCoin(content, input) {
+            got(content, { JSON: true })
+                .catch((err) => {
+                    const throwEmbed = new Discord.MessageEmbed()
+                        .setAuthor("Error")
+                        .setColor("RED")
+                        .setDescription(`Error Message: \`${err}\``);
+                    message.channel.send({ embeds: [throwEmbed] });
+                })
+                .then(result => {
+                    const content = JSON.parse(result.body);
+                    let count = 1;
+                    /**
+                     * "key" is the JSON index
+                     */
+                    for (const key in content) {
+                        if (content[key].id == input || content[key].symbol == input) {
+                            //console.log("148: Count: " + count);
+                            return getSpecificCoinInfoEmbed(content, key);
+                        }
+                        count++;
+                        //console.log("148: Count: " + count);
+                    }
+                    if (count > 199) {
+                        const invalidEmbed = new Discord.MessageEmbed()
+                            .setTitle("Error")
+                            .setColor("RED")
+                            .setTimestamp()
+                            .setFooter(client.user.username, client.user.displayAvatarURL())
+                            .setDescription(`\`${cryptoInput}\` is an invalid name or symbol\n`);
+                        return message.reply({ embeds: [invalidEmbed] });
+                    }
+                });
+            /* Alternative */
+            // Object.entries(content).forEach(([key, value]) => {
+            //     if ((value.id == input) || (value.symbol == input)) {
+            //         getSpecificCoinInfoEmbed(content, key);
+            //     }
+            // });
+        }
+
+
+        if (!cryptoInput) { // top 24 crypto by market cap
             coinGeckoURL = `${coinGeckoURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=24&page=1&sparkline=false`;
             got(coinGeckoURL, { JSON: true })
                 .catch((err) => {
@@ -126,70 +182,49 @@ module.exports = new Command({
                 })
                 .then(result => {
                     const content = JSON.parse(result.body);
-                    getListOfCoins(content);
+                    getCryptoListEmbed(content);
+                });
+        }
+        else if (cryptoInput == "list") {
+            coinGeckoURL = `${coinGeckoURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=200&page=1&sparkline=false`;
+            got(coinGeckoURL, { JSON: true })
+                .catch((err) => {
+                    const throwEmbed = new Discord.MessageEmbed()
+                        .setAuthor("Error")
+                        .setColor("RED")
+                        .setDescription(`Error Message: \`${err}\``);
+                    message.channel.send({ embeds: [throwEmbed] });
+                })
+                .then(result => {
+                    const content = JSON.parse(result.body);
+                    const cryptoSymbol = [];
+                    for (let i = 0; i < content.length; i++) {
+                        cryptoSymbol.push(content[i].symbol.toUpperCase());
+                    }
+                    //console.log(cryptoSymbol.toString() + "\n" + cryptoSymbol.length);
+
+                    let coinListEmbed = new Discord.MessageEmbed()
+                        .setTitle(":coin: Top 200 Cryptocurrency Symbols in Order of Market Cap")
+                        .setTimestamp()
+                        .setFooter(client.user.username, client.user.displayAvatarURL());
+
+                    let tempStr = `| `;
+                    for (let i = 0; i < cryptoSymbol.length; i++) {
+                        tempStr += `\`${cryptoSymbol[i]}\` | `;
+                    }
+                    coinListEmbed.setDescription(tempStr);
+                    //console.log(tempStr);
+                    //coinListEmbed.setDescription(`${cryptoSymbol[i]} | `)
+                    return message.channel.send({ embeds: [coinListEmbed] });
                 });
         }
         else {
-            if (cryptoInput === "bitcoin" || cryptoInput === "btc") {
-                coinGeckoURL = `${coinGeckoURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=24&page=1&sparkline=false`;
-                got(coinGeckoURL, { JSON: true })
-                    .catch((err) => {
-                        const throwEmbed = new Discord.MessageEmbed()
-                            .setAuthor("Error")
-                            .setColor("RED")
-                            .setTimestamp()
-                            .setFooter(client.user.username, client.user.displayAvatarURL())
-                            .setDescription(`Error Message: \`${err}\``);
-                        message.channel.send({ embeds: [throwEmbed] });
-                    })
-                    .then(result => {
-                        const content = JSON.parse(result.body);
-                        getSpecificCoinInfo(content, 0);
-                    });
-            }
-            else if (cryptoInput === "ethereum" || cryptoInput === "eth" || cryptoInput === "ether") {
-                coinGeckoURL = `${coinGeckoURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=24&page=1&sparkline=false`;
-                got(coinGeckoURL, { JSON: true })
-                    .catch((err) => {
-                        const throwEmbed = new Discord.MessageEmbed()
-                            .setAuthor("Error")
-                            .setColor("RED")
-                            .setTimestamp()
-                            .setFooter(client.user.username, client.user.displayAvatarURL())
-                            .setDescription(`Error Message: \`${err}\``);
-                        message.channel.send({ embeds: [throwEmbed] });
-                    })
-                    .then(result => {
-                        const content = JSON.parse(result.body);
-                        getSpecificCoinInfo(content, 1);
-                    });
-            }
-            else if (cryptoInput === "cardano" || cryptoInput === "ada") {
-                coinGeckoURL = `${coinGeckoURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=24&page=1&sparkline=false`;
-                got(coinGeckoURL, { JSON: true })
-                    .catch((err) => {
-                        const throwEmbed = new Discord.MessageEmbed()
-                            .setAuthor("Error")
-                            .setColor("RED")
-                            .setTimestamp()
-                            .setFooter(client.user.username, client.user.displayAvatarURL())
-                            .setDescription(`Error Message: \`${err}\``);
-                        message.channel.send({ embeds: [throwEmbed] });
-                    })
-                    .then(result => {
-                        const content = JSON.parse(result.body);
-                        getSpecificCoinInfo(content, 2);
-                    });
-            }
-            else {
-                const invalidEmbed = new Discord.MessageEmbed()
-                    .setTitle("Error")
-                    .setColor("RED")
-                    .setTimestamp()
-                    .setFooter(client.user.username, client.user.displayAvatarURL())
-                    .setDescription(`\`${cryptoInput}\` is an invalid name or symbol`);
-                return message.reply({ embeds: [invalidEmbed] });
-            }
+            coinGeckoURL = `${coinGeckoURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=200&page=1&sparkline=false`;
+            getCoin(coinGeckoURL, cryptoInput);
+            // if (cryptoInput === "bitcoin" || cryptoInput === "btc") { getCoin(coinGeckoURL, cryptoInput); }
+            // else if (cryptoInput === "ethereum" || cryptoInput === "eth" || cryptoInput === "ether") { getCoin(coinGeckoURL, cryptoInput); }
+            // else if (cryptoInput === "cardano" || cryptoInput === "ada") { getCoin(coinGeckoURL, cryptoInput); }
+
         }
 
     }
