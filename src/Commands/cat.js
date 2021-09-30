@@ -29,7 +29,7 @@ module.exports = new Command({
 
                 const catEmbed = new Discord.MessageEmbed()
                     .setColor("RANDOM")
-                    .setTitle(`:smiley_cat:   Cat`)
+                    .setTitle(`:smiley_cat:`)
                     .setImage(catImg)
                     .setTimestamp()
                     .setFooter(client.user.username, client.user.displayAvatarURL())

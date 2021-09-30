@@ -7,7 +7,7 @@ const got = require("got");
 
 module.exports = new Command({
     name: "pokemon",
-    description: "Get the information of a random Pokemon, or a specific Pokemon by it's name or ID.\n\nNote: Some Pokemon will not have moves to display.",
+    description: "Get the information of a random Pokemon, or a specific Pokemon by it's name or ID. Note: Some Pokemon will not have moves to display.",
     usage: `\`${config.prefix}pokemon [name | number]\``,
     permission: "SEND_MESSAGES",
 

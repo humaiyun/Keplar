@@ -7,7 +7,7 @@ const got = require("got");
 
 module.exports = new Command({
     name: "xkcd",
-    description: `Generate a random xkcd comic, or a specific one by number.\n\nNote: For the latest comic, use ${config.prefix}xkcd [latest | l]`,
+    description: `Generate a random xkcd comic, a specific one by number, or the latest one.`,
     usage: `\`${config.prefix}xkcd [number | latest | l]\``,
     permission: "SEND_MESSAGES",
 

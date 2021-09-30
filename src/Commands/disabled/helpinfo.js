@@ -2,7 +2,10 @@
 const Command = require("../Structures/Command.js");
 const config = require("../Data/config.json");
 const Discord = require("discord.js");
-const paginator = require('@koenie06/discord.js-pagination');
+const paginationEmbed = require('discordjs-button-pagination');
+
+const requireFolder = require("require-folder");
+const content = requireFolder("./src/Commands", { exclude: ["disabled", "helpinfo.js"] });
 
 const Event = require("../Structures/Event.js");
 const intents = new Discord.Intents(32767);
@@ -15,176 +18,52 @@ module.exports = new Command({
     permission: "SEND_MESSAGES",
 
     async run(message, args, client) {
-
-        const input = args[0];
-
         const homePage = new Discord.MessageEmbed()
-            .setTitle("Home Page")
+            .setTitle("Advanced Help Command")
             .setColor("RANDOM")
-            .setDescription("Home Page");
+            .setDescription(`Detailed list of all the supported commands, and how to use them.\n\n**Legend**\n< required >\n[ optional ]`) //\n\n**Table of Contents**\n1\n2\n3\n4\n5\n6\n7
+            .setFields({
+                name: `Table of Contents`,
+                value: `\u200B`,
+                inline: false
+            }, {
+                name: `Information`,
+                value: `\u200B`,
+                inline: false
+            })
         const information = new Discord.MessageEmbed()
             .setTitle("information")
             .setColor("RANDOM")
             .setDescription("information");
+        const images = new Discord.MessageEmbed()
+            .setTitle("images")
+            .setColor("RANDOM")
+            .setDescription("images");
         const fun = new Discord.MessageEmbed()
             .setTitle("fun")
             .setColor("RANDOM")
             .setDescription("fun");
-        const gamble = new Discord.MessageEmbed()
-            .setTitle("gamble")
+        const cryptocurrency = new Discord.MessageEmbed()
+            .setTitle("cryptocurrency")
             .setColor("RANDOM")
-            .setDescription("gamble");
+            .setDescription("cryptocurrency");
+        const misc = new Discord.MessageEmbed()
+            .setTitle("misc")
+            .setColor("RANDOM")
+            .setDescription("misc");
         const utility = new Discord.MessageEmbed()
             .setTitle("utility")
             .setColor("RANDOM")
             .setDescription("utility");
+        const pages = [homePage, information, images, fun, cryptocurrency, misc, utility]
 
+        const button1 = new Discord.MessageButton().setCustomId("help_previous").setEmoji('<:neox_leftarrow:877767124544782368>').setStyle("PRIMARY").setDisabled(false); //.setLabel("Previous")
+        const button2 = new Discord.MessageButton().setCustomId("help_next").setEmoji('<:neox_rightarrow:877765155230994482>').setStyle("PRIMARY").setDisabled(false); //.setLabel("Next")
+        const button3 = new Discord.MessageButton().setCustomId("help_close").setEmoji('❌').setLabel("Close Menu").setStyle("DANGER").setDisabled(false);
+        const confirmationRow = new Discord.MessageActionRow()
+            .addComponents(button1, button2, button3);
 
-        client.on('interactionCreate', (interaction) => {
-            if (interaction.isCommand()) {
-                if (interaction.commandName == input) {
-                    paginator.button({
-                        interaction: interaction,
-                        pages: [homePage, information, fun, gamble, utility],
-                        buttons: {
-                            previous: {
-                                label: "Previous Page",
-                                style: "SUCCESS",
-                                emoji: "⬅"
-                            },
-                            next: {
-                                label: "Next Page",
-                                style: "SUCCESS",
-                                emoji: "➡"
-                            },
-                            close: {
-                                label: "Close",
-                                style: "DANGER",
-                                emoji: "❌"
-                            }
-                        },
-                        timeout: 30000
-                    });
-                }
+        paginationEmbed(message, pages, [button1, button2], 180000);
 
-            }
-        })
-
-        message.channel.send("helpinfo.js:68: \`this line executes\`");
     }
 });
-
-
-
-// const embedMenu = message.channel.send({ embeds: [embedPages[0]] })
-//     .then(message => {
-//         emojiList.forEach(emoji => {
-//             message.react(emoji);
-//         })
-//     }).catch(error => console.log("helpinfo.js:57: One of the emoji's failed to react: ", error));
-
-// const collectUserReactionInfo = message.createReactionCollector((reaction, user) => {
-//     emojiList.includes(reaction.emoji.name) && user.id == message.author.id;
-// });
-
-// let pageNum = 0;
-
-// client.on("messageReactionAdd", (reaction, user) => {
-//     if (reaction.emoji.name === '⏪') {
-//         console.log("helpinfo.js: Left Arrow\n");
-//     }
-//     if (reaction.emoji.name === '❌') {
-//         console.log("helpinfo.js CLOSE\n");
-//     }
-//     if (reaction.emoji.name === '⏩') {
-//         console.log("helpinfo.js Right Arrow\n");
-//     }
-
-// });
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//console.log(`message.author.username: ${message.author} \nclient.user.tag: ${client.user.tag}`);
-//const messageID = message.author;
-
-// const homePage = new Discord.MessageEmbed()
-//     .setTitle("Home Page")
-//     .setColor("RANDOM")
-//     .setDescription("Advanced Help Command");
-// const information = new Discord.MessageEmbed()
-//     .setTitle("information")
-//     .setColor("RANDOM")
-//     .setDescription("information");
-// const fun = new Discord.MessageEmbed()
-//     .setTitle("fun")
-//     .setColor("RANDOM")
-//     .setDescription("fun");
-// const gamble = new Discord.MessageEmbed()
-//     .setTitle("gamble")
-//     .setColor("RANDOM")
-//     .setDescription("gamble");
-// const utility = new Discord.MessageEmbed()
-//     .setTitle("utility")
-//     .setColor("RANDOM")
-//     .setDescription("utility");
-
-// const embedPages = [homePage, information, fun, gamble, utility];
-// let pageIndex = 0;
-
-// const emojiList = ['⏪', '❌', '⏩'];
-
-// const button1 = new Discord.MessageButton()
-//     .setCustomId("help_menu_previous")
-//     .setEmoji('⏪')
-//     .setLabel("Previous")
-//     .setStyle("SUCCESS")
-//     .setDisabled(false);
-
-// const button2 = new Discord.MessageButton()
-//     .setCustomId("help_menu_next")
-//     .setEmoji('⏩')
-//     .setLabel("Previous")
-//     .setStyle("SUCCESS")
-//     .setDisabled(false)
-
-// const button3 = new Discord.MessageButton()
-//     .setCustomId("help_menu_close")
-//     .setEmoji('❌')
-//     .setLabel("Close Menu")
-//     .setStyle("DANGER")
-//     .setDisabled(false)
-
-// const buttonRow = new Discord.MessageActionRow();
-
-// //let embedMenu = message.channel.send({ embeds: [embedPages[pageIndex]] });
-// message.channel.send("test", {});
-
-//////////////////////////////////////////////////////////////////////////////
-// client.on('interactionCreate', (interaction) => {
-//     if (interaction.isCommand()) {
-//         paginator.button({
-//             interaction: interaction,
-//             pages: [homePage, information, fun, gamble, utility],
-//             buttons: {
-//                 previous: {
-//                     label: "Previous Page",
-//                     style: "SUCCESS",
-//                     emoji: "⬅"
-//                 },
-//                 next: {
-//                     label: "Next Page",
-//                     style: "SUCCESS",
-//                     emoji: "➡"
-//                 },
-//                 close: {
-//                     label: "Close",
-//                     style: "DANGER",
-//                     emoji: "❌"
-//                 }
-//             },
-//             timeout: 30000
-//         });
-//     }
-
-// })

@@ -4,7 +4,7 @@ const Discord = require("discord.js");
 
 module.exports = new Command({
     name: "stats",
-    description: "Display statistics of the bot",
+    description: "Displays statistics of the bot",
     usage: `\`${config.prefix}stats\``,
     permission: "SEND_MESSAGES",
     async run(message, args, client) {
