@@ -2,7 +2,6 @@ const Command = require("../Structures/Command.js");
 const config = require("../Data/config.json");
 const Discord = require("discord.js");
 const package = require("../../package.json");
-const paginationEmbed = require('discordjs-button-pagination');
 
 const requireFolder = require("require-folder");
 const content = requireFolder("./src/Commands", { exclude: ["disabled", "help.js"] });
@@ -13,6 +12,85 @@ module.exports = new Command({
     usage: `\`${config.prefix}help\``,
     permission: "SEND_MESSAGES",
     async run(message, args, client) {
+
+        /**
+         * Creates a pagination embed
+         * @param {Discord.Client} client - the discord bot
+         * @param {Discord.Message} msg - the user message
+         * @param {Discord.MessageEmbed[]} pages - the array of embeds to turn into pages
+         * @param {Discord.MessageButton[]} buttonList - the buttons
+         * @param {number | integer} timeout - timeout (default 120000; 2 minutes)
+         * @returns
+         */
+        const paginationEmbed = async (client, msg, pages, buttonList, timeout = 120000) => {
+            if (!msg && !msg.channel) throw new Error("Channel is inaccessible.");
+            if (!pages) throw new Error("Pages are not given.");
+            if (!buttonList) throw new Error("Buttons are not given.");
+            if (buttonList[0].style === "LINK" || buttonList[1].style === "LINK")
+                throw new Error(
+                    "Link buttons are not supported"
+                );
+            if (buttonList.length !== 2) throw new Error("Need two buttons.");
+
+            let page = 0;
+
+            const row = new Discord.MessageActionRow().addComponents(buttonList);
+            const curPage = await msg.channel.send({
+                embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}  •  ${client.user.username}`, client.user.displayAvatarURL())], //`Page ${page + 1} / ${pages.length} ${client.user.username}`, client.user.displayAvatarURL()
+                components: [row],
+            });
+
+            const filter = (i) => i.customId === buttonList[0].customId || i.customId === buttonList[1].customId;
+
+            const collector = await curPage.createMessageComponentCollector({
+                filter,
+                time: timeout,
+            });
+
+            collector.on("collect", async (i) => {
+                switch (i.customId) {
+                    case buttonList[0].customId:
+                        page = page > 0 ? --page : pages.length - 1;
+                        break;
+                    case buttonList[1].customId:
+                        page = page + 1 < pages.length ? ++page : 0;
+                        break;
+                    default:
+                        break;
+                }
+                await i.deferUpdate();
+                await i.editReply({
+                    embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}  •  ${client.user.username}`, client.user.displayAvatarURL())], //`Page ${page + 1} / ${pages.length}`
+                    components: [row],
+                });
+                collector.resetTimer();
+            });
+
+            collector.on("end", () => {
+                if (!curPage.deleted) {
+                    const disabledRow = new Discord.MessageActionRow().addComponents(
+                        buttonList[0].setDisabled(true),
+                        buttonList[1].setDisabled(true)
+                    );
+                    curPage.edit({
+                        embeds: [pages[page].setFooter(`Page ${page + 1} / ${pages.length}  •  ${client.user.username}`, client.user.displayAvatarURL())], //`Page ${page + 1} / ${pages.length}`
+                        components: [disabledRow],
+                    });
+                }
+            });
+            // const iFilter = i => i.user.id === msg.author.id;
+            // const iCollector = curPage.createMessageComponentCollector({ filter: iFilter, time: timeout });
+            // iCollector.on('collect', async i => {
+            //     if (i.customId === buttonList[0].customId) {
+            //         i.reply({ content: "LEFT", ephemeral: true });
+            //     }
+            //     else if (i.customId === buttonList[1].customId) {
+            //         i.reply({ content: "RIGHT", ephemeral: true });
+            //     }
+            // });
+
+            return curPage;
+        }
 
         const helpEmbed = new Discord.MessageEmbed()
             .setColor("RANDOM")
@@ -69,6 +147,7 @@ module.exports = new Command({
         const information = new Discord.MessageEmbed()
             .setTitle(":nazar_amulet: Information")
             .setColor("RANDOM")
+            .setTimestamp()
             .setDescription("**Legend: **  :black_large_square:  < \`required\` >  :black_large_square:  [ \`optional\` ]  :black_large_square:  ")
             .setFields({
                 name: `\`\`\`help\`\`\``,
@@ -86,6 +165,7 @@ module.exports = new Command({
         const images = new Discord.MessageEmbed()
             .setTitle(":camera: Images")
             .setColor("RANDOM")
+            .setTimestamp()
             .setDescription("**Legend: **  :black_large_square:  < \`required\` >  :black_large_square:  [ \`optional\` ]  :black_large_square:  ")
             .setFields({
                 name: `\`\`\`${content.meme.name}\`\`\``,
@@ -111,6 +191,7 @@ module.exports = new Command({
         const fun = new Discord.MessageEmbed()
             .setTitle(":video_game: Fun")
             .setColor("RANDOM")
+            .setTimestamp()
             .setDescription("**Legend: **  :black_large_square:  < \`required\` >  :black_large_square:  [ \`optional\` ]  :black_large_square:  ")
             .setFields({
                 name: `\`\`\`${content.coinflip.name}\`\`\``,
@@ -128,15 +209,17 @@ module.exports = new Command({
         const cryptocurrency = new Discord.MessageEmbed()
             .setTitle(":coin: Cryptocurrency")
             .setColor("RANDOM")
+            .setTimestamp()
             .setDescription("**Legend: **  :black_large_square:  < \`required\` >  :black_large_square:  [ \`optional\` ]  :black_large_square:  ")
             .setFields({
                 name: `\`\`\`${content.crypto.name}\`\`\``,
-                value: `**Description:  **\`${content.crypto.description}\`\n**Usage:  **\`${content.crypto.usage}\`\n**Permissions:  **\`${content.crypto.permission == "SEND_MESSAGES" ? "Everybody" : "Administrator"}\`\n\u200b`,
+                value: `**Description:  **\`${content.crypto.description}\`\n\u200b\n**Usage:  **\`${content.crypto.usage}\`\n**Permissions:  **\`${content.crypto.permission == "SEND_MESSAGES" ? "Everybody" : "Administrator"}\``,
                 inline: false
             });
         const misc = new Discord.MessageEmbed()
             .setTitle(":carousel_horse: Misc")
             .setColor("RANDOM")
+            .setTimestamp()
             .setDescription("**Legend: **  :black_large_square:  < \`required\` >  :black_large_square:  [ \`optional\` ]  :black_large_square:  ")
             .setFields({
                 name: `\`\`\`${content.ud.name}\`\`\``,
@@ -144,16 +227,17 @@ module.exports = new Command({
                 inline: false
             }, {
                 name: `\`\`\`${content.define.name}\`\`\``,
-                value: `**Description:  **\`${content.define.description}\`\n**Usage:  **\`${content.define.usage}\`\n**Permissions:  **\`${content.define.permission == "SEND_MESSAGES" ? "Everybody" : "Administrator"}\`\n\u200b`,
+                value: `**Description:  **\`${content.define.description}\`\n**Usage:  **\`${content.define.usage}\`\n**Permissions:  **\`${content.define.permission == "SEND_MESSAGES" ? "Everybody" : "Administrator"}\``,
                 inline: false
             });
         const utility = new Discord.MessageEmbed()
             .setTitle(":wrench: Utility")
             .setColor("RANDOM")
+            .setTimestamp()
             .setDescription("**Legend: **  :black_large_square:  < \`required\` >  :black_large_square:  [ \`optional\` ]  :black_large_square:  ")
             .setFields({
                 name: `\`\`\`${content.clear.name}\`\`\``,
-                value: `**Description:  **\`${content.clear.description}\`\n**Usage:  **\`${content.clear.usage}\`\n**Permissions:  **\`${content.clear.permission == "SEND_MESSAGES" ? "Everybody" : "Administrator"}\`\n\u200b`,
+                value: `**Description:  **\`${content.clear.description}\`\n**Usage:  **\`${content.clear.usage}\`\n**Permissions:  **\`${content.clear.permission == "SEND_MESSAGES" ? "Everybody" : "Administrator"}\``,
                 inline: false
             });
         const pages = [helpEmbed, information, images, fun, cryptocurrency, misc, utility]
@@ -161,6 +245,10 @@ module.exports = new Command({
         const button1 = new Discord.MessageButton().setCustomId("help_previous").setEmoji('<:neox_leftarrow:877767124544782368>').setStyle("PRIMARY").setDisabled(false); //.setLabel("Previous")
         const button2 = new Discord.MessageButton().setCustomId("help_next").setEmoji('<:neox_rightarrow:877765155230994482>').setStyle("PRIMARY").setDisabled(false); //.setLabel("Next")
 
-        const m = paginationEmbed(message, pages, [button1, button2], 120000);
+        const m = paginationEmbed(client, message, pages, [button1, button2], 120000);
+
+
+
+
     }
 });
