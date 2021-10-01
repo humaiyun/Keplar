@@ -153,10 +153,10 @@ module.exports = new Command({
                     }
                     if (count > 199) {
                         const invalidEmbed = new Discord.MessageEmbed()
-                            .setTitle("Error")
+                            //.setTitle("Error")
                             .setColor("RED")
-                            .setTimestamp()
-                            .setFooter(client.user.username, client.user.displayAvatarURL())
+                            // .setTimestamp()
+                            // .setFooter(client.user.username, client.user.displayAvatarURL())
                             .setDescription(`\`${cryptoInput}\` is an invalid name or symbol\n`);
                         return message.reply({ embeds: [invalidEmbed] });
                     }

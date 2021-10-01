@@ -25,11 +25,11 @@ module.exports = new Command({
 
         if (!questionInput) {
             const invalidEmbed = new Discord.MessageEmbed()
-                .setTitle("Error")
+                //.setTitle("Error")
                 .setColor("RED")
-                .setTimestamp()
-                .setFooter(client.user.username, client.user.displayAvatarURL())
-                .setDescription(`\`\`\`Provide the Magic 8-Ball a question to ask\`\`\``);
+                // .setTimestamp()
+                // .setFooter(client.user.username, client.user.displayAvatarURL())
+                .setDescription(`Provide the Magic 8-Ball a question to ask`);
             return message.reply({ embeds: [invalidEmbed] });
         }
 

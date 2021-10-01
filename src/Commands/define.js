@@ -16,10 +16,10 @@ module.exports = new Command({
 
         if (!word) {
             const invalidEmbed = new Discord.MessageEmbed()
-                .setTitle("Error")
+                //.setTitle("Error")
                 .setColor("RED")
-                .setTimestamp()
-                .setFooter(client.user.username, client.user.displayAvatarURL())
+                //.setTimestamp()
+                //.setFooter(client.user.username, client.user.displayAvatarURL())
                 .setDescription(`Enter a word to get the definition of`);
             return message.reply({ embeds: [invalidEmbed] });
         }

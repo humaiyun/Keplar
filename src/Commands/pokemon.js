@@ -27,10 +27,10 @@ module.exports = new Command({
             if (!isNaN(parseInt(pokemonInput))) {
                 if (parseInt(pokemonInput) < minIndex || parseInt(pokemonInput) > maxIndex) {
                     const invalidEmbed = new Discord.MessageEmbed()
-                        .setTitle("Error")
+                        //.setTitle("Error")
                         .setColor("RED")
-                        .setTimestamp()
-                        .setFooter(client.user.username, client.user.displayAvatarURL())
+                        //.setTimestamp()
+                        //.setFooter(client.user.username, client.user.displayAvatarURL())
                         .setDescription(`Invalid index \`${pokemonInput}\`\n\nPick a number between \`${minIndex}\` and \`${maxIndex}\``);
                     return message.reply({ embeds: [invalidEmbed] });
                 }

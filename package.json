@@ -14,6 +14,7 @@
   },
   "homepage": "https://github.com/humaiyun/Keplar#readme",
   "dependencies": {
+    "@discordjs/voice": "^0.6.0",
     "@koenie06/discord.js-pagination": "^2.1.5",
     "ascii-table": "^0.0.9",
     "discord.js": "^13.2.0-dev.1631880196.88e2622",
