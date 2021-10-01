@@ -7,7 +7,7 @@ const got = require("got");
 
 module.exports = new Command({
     name: "crypto",
-    description: "Get the latest market information for various cryptocurrencies\n\nNote: This supports the top 200 cryptocurrency by market cap.\n\nData provided by CoinGecko",
+    description: "Get the latest market information for various cryptocurrencies. This command supports the top 200 cryptocurrency by market cap.\n\nData provided by CoinGecko",
     usage: `\`${config.prefix}crypto [name | symbol | list]\``,
     permission: "SEND_MESSAGES",
 

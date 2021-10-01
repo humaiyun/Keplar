@@ -17,7 +17,7 @@ module.exports = new Command({
                 const throwEmbed = new Discord.MessageEmbed()
                     .setAuthor("Error")
                     .setColor("RED")
-                    .setDescription(`If you need help, type \`${config.prefix}help advice\`\n\n` + `\`${err}\``);
+                    .setDescription(`If you need help, type \`${config.prefix}help\`\n\n` + `\`${err}\``);
 
                 message.reply({ embeds: [throwEmbed] });
             })

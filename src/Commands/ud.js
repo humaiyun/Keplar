@@ -28,7 +28,7 @@ module.exports = new Command({
                 .setColor("RED")
                 .setTimestamp()
                 .setFooter(client.user.username, client.user.displayAvatarURL())
-                .setDescription(`A definition for "${word}" could not be found. \n\nIf you need help, type \`${config.prefix}help ud\`\n\n` + `Error Message: \`${err}\``);
+                .setDescription(`A definition for "${word}" could not be found. \n\nIf you need help, type \`${config.prefix}help\`\n\n` + `Error Message: \`${err}\``);
 
             message.reply({ embeds: [throwEmbed] });
             //message.reply(`"${word}" not found...`);

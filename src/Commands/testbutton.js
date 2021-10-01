@@ -65,10 +65,6 @@ module.exports = new Command({
 
         const iFilter = i => i.user.id === message.author.id;
 
-        // const interactionFilter = userInteraction => {
-        //     userInteraction.user.id == message.author.id;
-        // }
-
         const collector = m.createMessageComponentCollector({ filter: iFilter, time: 0 });
 
         collector.on('collect', async i => {

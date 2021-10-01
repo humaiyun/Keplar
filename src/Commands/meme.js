@@ -21,7 +21,7 @@ module.exports = new Command({
                 const throwEmbed = new Discord.MessageEmbed()
                     .setAuthor("Error")
                     .setColor("RED")
-                    .setDescription(`Something wrong happened... \n\nIf you need help, type \`${config.prefix}help meme\`\n\n` + `Error Message: \`${err}\``);
+                    .setDescription(`Something wrong happened... \n\nIf you need help, type \`${config.prefix}help\`\n\n` + `Error Message: \`${err}\``);
                 message.reply({ embeds: [throwEmbed] });
             })
             .then(result => {

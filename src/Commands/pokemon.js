@@ -46,7 +46,7 @@ module.exports = new Command({
                     .setColor("RED")
                     .setTimestamp()
                     .setFooter(client.user.username, client.user.displayAvatarURL())
-                    .setDescription(`\`${pokemonInput}\` is an invalid Pokemon name. \n\nIf you need help, type \`${config.prefix}help pokemon\`\n\n` + `Error Message: \`${err}\``);
+                    .setDescription(`\`${pokemonInput}\` is an invalid Pokemon name. \n\nIf you need help, type \`${config.prefix}help\`\n\n` + `Error Message: \`${err}\``);
                 message.channel.send({ embeds: [throwEmbed] });
             })
             .then(result => {
