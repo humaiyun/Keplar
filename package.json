@@ -1,19 +1,23 @@
 {
-  "name": "discordvarietybot",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/humaiyun/DiscordVarietyBot.git"
-  },
-  "author": "Humaiyun",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/humaiyun/DiscordVarietyBot/issues"
-  },
-  "homepage": "https://github.com/humaiyun/DiscordVarietyBot#readme",
-  "dependencies": {
-    "discord.js": "^13.2.0-dev.1631880196.88e2622"
-  }
+    "name": "Keplar",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/index.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/humaiyun/Keplar/tree/keplar-alpha"
+    },
+    "scripts": {
+        "start": "node index.js",
+        "test": "nodemon index.js"
+    },
+    "keywords": [],
+    "author": "Humaiyun",
+    "license": "ISC",
+    "homepage": "https://github.com/humaiyun/Keplar/tree/keplar-alpha#readme",
+    "dependencies": {
+        "discord.js": "^13.1.0",
+        "glob": "^7.1.7",
+        "mongoose": "^6.0.2"
+    }
 }

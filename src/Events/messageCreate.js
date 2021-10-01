@@ -1,15 +1,20 @@
-const Event = require("../Structures/Event.js");
+const client = require("../index");
 
-module.exports = new Event("messageCreate", (client, message) => {
-	if (message.author.bot) return;
+client.on("messageCreate", async (message) => {
+    if (
+        message.author.bot ||
+        !message.guild ||
+        !message.content.toLowerCase().startsWith(client.config.prefix)
+    )
+        return;
 
-	if (!message.content.startsWith(client.prefix)) return;
+    const [cmd, ...args] = message.content
+        .slice(client.config.prefix.length)
+        .trim()
+        .split(" ");
 
-	const args = message.content.substring(client.prefix.length).split(/ +/);
+    const command = client.commands.get(cmd.toLowerCase()) || client.commands.find(c => c.aliases?.includes(cmd.toLowerCase()));
 
-	const command = client.commands.find(cmd => cmd.name == args[0]);
-
-	if (!command) return message.reply(`${args[0]} is not a valid command!`);
-
-	command.run(message, args, client);
+    if (!command) return;
+    await command.run(client, message, args);
 });

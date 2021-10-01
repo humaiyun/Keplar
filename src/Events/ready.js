@@ -1,5 +1,5 @@
-const Event = require("../Structures/Event.js");
+const client = require("../index");
 
-module.exports = new Event("ready", client => {
-	console.log(`Bot "${client.user.tag}" is ready!`);
-});
+client.on("ready", () =>
+    console.log(`${client.user.tag} is up and ready to go!`)
+);
