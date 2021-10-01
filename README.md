@@ -1,2 +1,1 @@
-# DiscordVarietyBot
- 
+# keplar-alpha
