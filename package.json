@@ -17,10 +17,11 @@
     "@koenie06/discord.js-pagination": "^2.1.5",
     "ascii-table": "^0.0.9",
     "discord.js": "^13.2.0-dev.1631880196.88e2622",
-    "discordjs-button-pagination": "^1.0.7",
     "got": "^11.8.2",
     "nodemon": "^2.0.13",
     "relevant-urban": "^2.0.0",
-    "require-folder": "^1.0.0"
+    "require-folder": "^1.0.0",
+    "yt-search": "^2.10.1",
+    "ytdl-core": "^4.9.1"
   }
 }
