@@ -31,7 +31,7 @@ module.exports = {
         const bool = interaction.options.getBoolean("list");
         //console.log(`integer: ${integer}   str: ${str}`);
 
-        if (!str && !bool) {
+        if (!str && !bool) { // if both null
             coinGeckoURL = `${coinGeckoURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=24&page=1&sparkline=false`;
             got(coinGeckoURL, { JSON: true })
                 .catch((err) => {
@@ -46,7 +46,7 @@ module.exports = {
                 });
         }
 
-        else if (bool && !str) {
+        else if (bool && !str) { // list
             coinGeckoURL = `${coinGeckoURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=201&page=1&sparkline=false`;
             got(coinGeckoURL, { JSON: true })
                 .catch((err) => {
@@ -75,12 +75,12 @@ module.exports = {
                 });
         }
 
-        else if (str && !bool) {
+        else if (str && !bool) { // crypto name or symbol
             coinGeckoURL = `${coinGeckoURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=201&page=1&sparkline=false`;
-            getCoin(coinGeckoURL, str);
+            getCoin(coinGeckoURL, str.toLowerCase());
         }
 
-        else if (str && bool) {
+        else if (str && bool) { // throw error if both commands picked at the same time 
             const throwEmbed = new MessageEmbed()
                 .setColor("RED")
                 .setDescription(`Error: You can't select both options at the same time!`);
