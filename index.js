@@ -13,4 +13,8 @@ client.config = require("./config.json");
 // Initializing the project
 require("./handler")(client);
 
+process.on("unhandledRejection", (err) => {
+    console.log("\nindex.js:9: Unhandled Rejection at: ", err);
+});
+
 client.login(client.config.token);

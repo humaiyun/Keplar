@@ -26,8 +26,8 @@ module.exports = {
         const integer = interaction.options.getInteger('index');
         const minIndex = 1, maxIndex = 898;
 
-        if (!integer && !string) getPokemon(randomNumMinToMax(minIndex, maxIndex)); // get random
-        if (!integer && string) getPokemon(string); //get by name
+        if (!integer && !string) return getPokemon(randomNumMinToMax(minIndex, maxIndex)); // get random
+        if (!integer && string) return getPokemon(string); //get by name
 
         if (integer && string) { // error if both parameters are inputted
             return interaction.followUp({
@@ -50,7 +50,7 @@ module.exports = {
                 });
             }
             //pokemonInput = integer;
-            getPokemon(integer);
+            return getPokemon(integer);
         }
 
         /**

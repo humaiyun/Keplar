@@ -7,7 +7,7 @@ module.exports = {
     userPermissions: ["SEND_MESSAGES"],
     ...new SlashCommandBuilder()
         .setName("crypto")
-        .setDescription(`Get the latest market information for various cryptocurrencies. Supports the top 200 coins.`)
+        .setDescription(`Get the latest market information for various cryptocurrencies. Supports the top 200 coins`)
         .addStringOption((option) =>
             option
                 .setName("cryptocurrency")
@@ -24,8 +24,9 @@ module.exports = {
 
     run: async (client, interaction, args) => {
 
-        let coinGeckoURL = `https://api.coingecko.com/api/v3/`;
-        //coinGeckoURL = `${coinGeckoURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=24&page=1&sparkline=false`;
+        console.log(`interaction?: ${interaction.getSubCommand() === "list"}`)
+
+        let coinGeckoURL = `https://api.coingecko.com/api/v3/`; // `${coinGeckoURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=24&page=1&sparkline=false`;
 
         const str = interaction.options.getString("cryptocurrency");
         const bool = interaction.options.getBoolean("list");
