@@ -19,13 +19,13 @@ module.exports = {
         const user = interaction.user.tag;
         //console.log(`amount: ${amount}   user: ${user}`);
 
-        if (amount > 100) {
+        if (amount > 75) {
             return interaction.followUp({
                 embeds: [new MessageEmbed()
                     .setColor("RED")
                     .setTimestamp()
                     .setFooter(client.user.username, client.user.displayAvatarURL())
-                    .setDescription(`You cannot clear more than \`100\` messages!`)]
+                    .setDescription(`You cannot clear more than \`75\` messages!`)]
             });
         }
         else if (amount < 0) {

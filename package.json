@@ -22,6 +22,7 @@
         "glob": "^7.1.7",
         "got": "^11.8.2",
         "mongoose": "^6.0.2",
-        "nodemon": "^2.0.13"
+        "nodemon": "^2.0.13",
+        "relevant-urban": "^2.0.0"
     }
 }

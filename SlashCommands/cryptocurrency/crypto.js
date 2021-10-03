@@ -24,8 +24,6 @@ module.exports = {
 
     run: async (client, interaction, args) => {
 
-        console.log(`interaction?: ${interaction.getSubCommand() === "list"}`)
-
         let coinGeckoURL = `https://api.coingecko.com/api/v3/`; // `${coinGeckoURL}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=24&page=1&sparkline=false`;
 
         const str = interaction.options.getString("cryptocurrency");
