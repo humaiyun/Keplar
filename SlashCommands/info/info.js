@@ -7,26 +7,25 @@ const cpuStat = require("cpu-stat");
 module.exports = {
     userPermissions: ["SEND_MESSAGES"],
     ...new SlashCommandBuilder()
-        .setName("botinfo")
+        .setName("info")
         .setDescription("Shows a detailed list of bot and server information"),
-
 
     run: async (client, interaction, args) => {
 
         cpuStat.usagePercent(function (err, percent, seconds) {
-            if (err) return console.log(`botinfo.js:16: Error: ${err}`);
+            if (err) return console.log(`info.js:16: Error: ${err}`);
 
-            let connectedchannelsamount = 0;
+            let conAmt = 0;
             let guilds = client.guilds.cache.map((guild) => guild);
             for (let i = 0; i < guilds.length; i++) {
-                if (guilds[i].me.voice.channel) connectedchannelsamount += 1;
+                if (guilds[i].me.voice.channel) conAmt += 1;
             }
-            if (connectedchannelsamount > client.guilds.cache.size) connectedchannelsamount = client.guilds.cache.size;
+            if (conAmt > client.guilds.cache.size) conAmt = client.guilds.cache.size;
 
             interaction.followUp({
                 embeds: [new MessageEmbed()
                     //.setAuthor(client.user.username, client.user.displayAvatarURL())
-                    .setTitle("__**Bot & Server Information**__")
+                    .setTitle("__Bot & Server Information__")
                     .setColor("RANDOM")
                     .setTimestamp()
                     .setFooter(client.user.username, client.user.displayAvatarURL())
@@ -55,7 +54,7 @@ module.exports = {
                         value: `\`Total: ${client.channels.cache.filter((ch) => ch.type === "GUILD_VOICE" || ch.type === "GUILD_STAGE_VOICE").size}\``,
                         inline: true
                     }, { // { name: "🔊 Connections", value: `\`${connectedchannelsamount} Connections\``, inline: true }, 
-                        name: ":frog: Discord.js",
+                        name: ":octopus: Discord.js",
                         value: `\`v${Discord.version == "v13.2.0-dev.1633133131.fe95005" ? "v13.2.0" : "v13.2.0"}\``,
                         inline: true
                     }, {
@@ -83,7 +82,7 @@ module.exports = {
                         value: `\`\`${os.platform() === "win32" ? "Windows 10 Pro 64bit" : "Not found"}\`\``,
                         inline: true
                     }, {
-                        name: ":incoming_envelope: API Latency",
+                        name: ":incoming_envelope: Bot Latency",
                         value: `\`${client.ws.ping}ms\``,
                         inline: true
                     }, {
