@@ -43,11 +43,11 @@ module.exports = {
                         inline: true
                     }, {
                         name: ":open_file_folder: Users",
-                        value: `\`Total: ${client.users.cache.size} Users\``,
+                        value: `\`Total: ${client.users.cache.size}\``,
                         inline: true
                     }, {
                         name: ":open_file_folder: Servers",
-                        value: `\`Total: ${client.guilds.cache.size} Servers\``,
+                        value: `\`Total: ${client.guilds.cache.size}\``,
                         inline: true
                     }, {
                         name: ":open_file_folder: Voice-Channels",
@@ -55,7 +55,7 @@ module.exports = {
                         inline: true
                     }, { // { name: "🔊 Connections", value: `\`${connectedchannelsamount} Connections\``, inline: true }, 
                         name: ":octopus: Discord.js",
-                        value: `\`v${Discord.version == "v13.2.0-dev.1633133131.fe95005" ? "v13.2.0" : "v13.2.0"}\``,
+                        value: `\`${Discord.version == "v13.2.0-dev.1633133131.fe95005" ? "v13.2.0" : "v13.2.0"}\``,
                         inline: true
                     }, {
                         name: ":four_leaf_clover: Node.js",
