@@ -12,7 +12,7 @@
   <a href="https://github.com/humaiyun" target="_blank"><img src="https://i.imgur.com/gtuq1SA.png" alt="humaiyun"></a>
 </div>
 
-<p align="center">
+<div align="center">
   <a href="#about">About</a>
   — 
   <a href="#features">Features</a>
@@ -20,7 +20,7 @@
   <a href="#work-in-progress">Work in Progress</a>
   — 
   <a href="#misc">Misc</a>
-</p>
+</div>
 
 
 ## ❓ About
@@ -36,10 +36,20 @@ If you end up downloading, cloning, or you simply like this repository, leaving 
 
 
 ## 📃 Features
-> As of October 6th, 2021
+Every single command is supported with slash commands as well as prefix-based. Note: Some commands will have several options to them to allow for different types of requests.
+
+* 🎮 **Fun:** Several fun commands such as `8ball`, `advice`, and `coinflip`
+* 📷 **Images:** Commands that return an embedded image include `cat`, `meme`, `pokemon`, and `xkcd`
+* 💰 **Cryptocurrency:** Get current crypto market statistics with `crypto`
+* ❔ **Info:** Commands include `info`, `ping`, and `stats` for general server and bot information
+* 🔧 **Utility:** For general utility `clear`, and `rng`
+* 🪀 **Misc:** Get the definitions of words with `define`, and `stats`
+
+This bot is still in very early development. More commands will be added in the future, with support for both slash, and prefix commands.
 
 
 ## 🏗 Work in Progress
-## Misc.
-## What I Learned
+As mentioned above, Keplar is in active development. More features will come 
+
+## 📚 What I Learned
   
