@@ -2,6 +2,7 @@ const { glob } = require("glob");
 const { promisify } = require("util");
 const { Client } = require("discord.js");
 const mongoose = require("mongoose");
+const config = require("../config.json");
 
 const globPromise = promisify(glob);
 
@@ -44,7 +45,7 @@ module.exports = async (client) => {
     });
     client.on("ready", async () => {
         // Register for a single guild
-        const guild = client.guilds.cache.get("888188118128283648");
+        const guild = client.guilds.cache.get(config.singleGuildId);
         await guild.commands.set(arrayOfSlashCommands).then((cmd) => {
             const getRoles = (commandName) => {
                 const permissions = arrayOfSlashCommands
