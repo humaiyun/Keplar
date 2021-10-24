@@ -18,10 +18,8 @@
     "dependencies": {
         "@discordjs/builders": "^0.6.0",
         "@discordjs/opus": "^0.6.0",
-        "@types/node": "^16.10.2",
         "ascii-table": "^0.0.9",
         "cpu-stat": "^2.0.1",
-        "discord-music-player": "^8.1.0",
         "discord.js": "^13.2.0-dev.1633133131.fe95005",
         "glob": "^7.1.7",
         "got": "^11.8.2",
