@@ -47,6 +47,7 @@ Every single command is supported with slash commands as well as prefix-based. N
 
 * 🎮 **Fun:** Several fun commands such as `8ball`, `advice`, and `coinflip`
 * 📷 **Images:** Commands that return an embedded image include `cat`, `meme`, `pokemon`, and `xkcd`
+* 🎶 **Music:** Play tunes and more: `play`, `currentSong`, `lyrics`, `shuffle`, `volume`, and 6 more!
 * 💰 **Cryptocurrency:** Get current crypto market statistics with `crypto`
 * ❔ **Info:** Commands include `info`, `ping`, and `stats` for general server and bot information
 * 🔧 **Utility:** For general utility `clear`, and `rng`
@@ -88,7 +89,6 @@ In terms of how to acquire a bot token, mongoDB connection string, or external a
   <p>
     Some ideas in the works include:
     <ul>
-      <li>Music commands (play, pause, skip, queue, etc.)</li>
       <li>Database (MongoDB) setup for the collection and storage of information</li>
       <li>Permissions Handler</li>
     </ul>
