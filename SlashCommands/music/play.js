@@ -1,5 +1,5 @@
-
-const { Client, CommandInteraction, MessageEmbed } = require("discord.js");
+/* https://github.com/Androz2091/discord-player/issues/794#issue-1000772967 */
+const { MessageEmbed } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { QueryType } = require("discord-player");
 const player = require("../../client/player");
@@ -15,7 +15,6 @@ module.exports = {
                 .setDescription("Enter the name or YouTube link of the song you want to play")
                 .setRequired(true)
         ),
-
     run: async (client, interaction, args) => {
         const songTitle = interaction.options.getString("song");
 
@@ -24,7 +23,7 @@ module.exports = {
             return interaction.followUp({
                 embeds: [new MessageEmbed()
                     .setColor("RED")
-                    .setDescription(`You must be in a voice channel to use this command!`)]
+                    .setDescription(`❌  |  You must be in a voice channel to use this command!`)]
             });
 
         // Search the song query
@@ -46,8 +45,9 @@ module.exports = {
         interaction.followUp({
             embeds: [new MessageEmbed()
                 .setColor("RANDOM")
-                .setDescription(`Playing ${songTitle}`)]
+                .setDescription(`✅  |  Added "\`${songTitle}\`" to the queue`)]
         });
+        console.log(`\nmusic/play.js:50: ${interaction.user.tag} added ${songTitle} to the queue...`);
 
         // Add tracks to queue
         searchResult.playlist
