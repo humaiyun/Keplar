@@ -30,7 +30,7 @@
 <hr>
 <h2 id="about"> ❓ About </h2>
 
-Keplar is a personal Discord bot project that is constantly expanding. The purpose of this bot is to be a bot for use by my friends and I in our own private Discord servers. With that in mind, this bot was coded assuming it would only be used for private server use. This means the bot has no formal permission handling (e.g. `everyone`, `administrator`, `moderators`, etc.), moderation (e.g. `kick`, `ban`, `remove`, `mute`, etc.), or automated commands (e.g. `auto roles`, `server event logging`, `command disabling`, etc.). 
+Keplar is a personal Discord bot project that is constantly expanding. The purpose of this bot is to be a bot for use by my friends and I in our own private Discord servers. With that in mind, this bot was coded assuming it would only be used for private server use. This means the bot has no formal permission handling (e.g. `everyone`, `administrator`, `moderators`, etc.), or automated commands (e.g. `auto roles`, `command disabling`, etc.). 
 
 <strong>Keplar is an ongoing project of mine and it is still under active development at the moment.</strong>
 
