@@ -47,7 +47,7 @@ module.exports = {
                 const thumbnail = content.thumbnail.genius;
                 const link = content.links.genius;
 
-                console.log(`\nlyrics.js:49: lyrics.length: ${content.lyrics.length}\n`);
+                console.log(`\nlyrics.js:50: \`${author} - ${title}\` lyrics length: ${content.lyrics.length}`);
 
                 if (lyrics.length > 4096) {
                     return interaction.followUp({
@@ -68,7 +68,7 @@ module.exports = {
                         .setTitle(`${author}  -  ${title}`)
                         .setImage(thumbnail)
                         .setURL(link)
-                        .setDescription(`📄  **Lyrics**\n\u200b\n${lyrics}`)
+                        .setDescription(`📄  **Lyrics**\n\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n${lyrics}`)
                         .setTimestamp()
                         .setFooter(client.user.username, client.user.displayAvatarURL())]
                 });
