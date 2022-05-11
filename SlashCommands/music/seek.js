@@ -26,11 +26,15 @@ module.exports = {
             });
         }
 
-        const time = interaction.options.getInteger("time") * 1000;
-        console.log(`time: ${time}`)
+        let time = interaction.options.getInteger("time") * 1000;
+
+        if (time < 0) time = 0;
+        if (time > queue.current.durationMS) time = queue.current.durationMS - 1;
+
+        console.log(`music/seek.js:34: time: ${time}`)
         await queue.seek(time);
 
-        console.log(`\nmusic/seek.js:33: ${interaction.user.tag} seeked to ${time / 1000} seconds for the current track...`);
+        console.log(`music/seek.js:37: ${interaction.user.tag} seeked to ${time / 1000} seconds for the current track...`);
 
         return interaction.followUp({
             embeds: [new MessageEmbed()

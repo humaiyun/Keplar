@@ -11,12 +11,23 @@ module.exports = {
 
     run: async (client, interaction, args) => {
         const queue = player.getQueue(interaction.guildId);
+
+        if (!queue?.playing) {
+            return interaction.followUp({
+                embeds: [new MessageEmbed()
+                    .setColor("RED")
+                    .setDescription(`❌  |  No music is currently being played`)]
+            });
+        }
+
         queue.setPaused(false);
+
+        console.log(`\nmusic/resume.js:25: ${interaction.user.tag} resumed the current track...`);
 
         return interaction.followUp({
             embeds: [new MessageEmbed()
                 .setColor("RANDOM")
-                .setDescription(`Resumed the current track!`)]
+                .setDescription(`✅  |  Resumed the current track`)]
         });
     }
 };

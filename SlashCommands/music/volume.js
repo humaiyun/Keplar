@@ -14,11 +14,8 @@ module.exports = {
                 .setDescription("Enter the percentage you want to change the volume to")
                 .setRequired(false)
         ),
-
     run: async (client, interaction, args) => {
-
         const volumePercentage = interaction.options.getInteger("percentage");
-
         const queue = player.getQueue(interaction.guildId);
         if (!queue?.playing)
             return interaction.followUp({

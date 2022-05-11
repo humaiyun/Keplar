@@ -40,7 +40,7 @@ module.exports = {
 
 
         interaction.channel.bulkDelete(amount + 1);
-        console.log(`\nclear.js:48: ${user} cleared ${amount} messages...`);
+        console.log(`\nutility/clear.js:48: ${user} cleared ${amount} messages...`);
 
         const msg = await interaction.channel.send({
             embeds: [new MessageEmbed()

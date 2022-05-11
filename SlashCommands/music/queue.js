@@ -1,7 +1,6 @@
 
-const { Client, CommandInteraction, MessageEmbed } = require("discord.js");
+const { MessageEmbed } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { QueryType } = require("discord-player");
 const player = require("../../client/player");
 
 module.exports = {
@@ -16,7 +15,7 @@ module.exports = {
             return interaction.followUp({
                 embeds: [new MessageEmbed()
                     .setColor("RED")
-                    .setDescription(`The queue is empty!`)]
+                    .setDescription(`❌  |  The queue is empty!`)]
             });
 
         const currentTrack = queue.current;
@@ -42,8 +41,6 @@ module.exports = {
                     value: `🎶 | [**${currentTrack.title}**](${currentTrack.url}) - \`${currentTrack.requestedBy.tag}\``,
                     inline: false
                 })
-                .setTimestamp()
-                .setFooter(client.user.username, client.user.displayAvatarURL())
             ]
         });
 

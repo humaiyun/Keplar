@@ -22,6 +22,8 @@ module.exports = {
 
         await queue.shuffle();
 
+        console.log(`\nmusic/shuffle.js:25: ${interaction.user.tag} shuffled the queue...`);
+
         return interaction.followUp({
             embeds: [new MessageEmbed()
                 .setColor("RANDOM")
